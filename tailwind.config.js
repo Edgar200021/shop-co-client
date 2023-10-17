@@ -12,6 +12,11 @@ export default {
         user: "url('src/assets/icons/user.svg')",
         hero: "url('src/assets/images/hero.png')",
         frame: "url('src/assets/icons/frame.svg')",
+        casual: "url('src/assets/images/categories/casual.png')",
+        formal: "url('src/assets/images/categories/formal.png')",
+        party: "url('src/assets/images/categories/party.png')",
+        gym: "url('src/assets/images/categories/gym.png')",
+		email:  "url('src/assets/icons/email.svg')",
       },
       width: {
         logo: 'clamp(120px, 8vw, 140px)',

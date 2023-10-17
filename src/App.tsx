@@ -6,7 +6,11 @@ import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import VerifyAccount from './pages/VerifyAccount'
-import AccountPage from './pages/AccountPage.1'
+import AccountPage from './pages/AccountPage'
+import AdminLayout from './layouts/AdminLayout'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import AdminProductsLayout from './layouts/AdminProductsLayout'
+import AdminProductsPage from './pages/AdminProductsPage'
 
 const router = createBrowserRouter([
   {
@@ -14,7 +18,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <MainPage className="mb-40" />,
+        element: <MainPage />,
       },
       { path: 'auth/login', element: <LoginPage className="pt-20 pb-40" /> },
       {
@@ -26,6 +30,27 @@ const router = createBrowserRouter([
         element: <VerifyAccount className="pt-20 mb-40" />,
       },
       { path: 'user/account', element: <AccountPage /> },
+    ],
+  },
+  {
+    element: (
+      <ProtectedRoute>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
+    path: '/admin',
+    children: [
+      {
+        path: 'products',
+        element: <AdminProductsLayout />,
+        children: [
+          { element: <AdminProductsPage />, index: true },
+          {
+            path: 'add',
+            element: <h1>Add product</h1>,
+          },
+        ],
+      },
     ],
   },
 ])

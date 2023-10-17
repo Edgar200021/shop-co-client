@@ -16,7 +16,7 @@ export default function ProductStars({
   return (
     <ul className={cn('flex gap-1', className)}>
       {[...Array(count)].map((_, i) => (
-        <li>
+        <li key={i}>
           <Star full={i + 1 <= Math.round(averageRating)} />
         </li>
       ))}
@@ -42,7 +42,7 @@ export const ProductReviewStars = ({
   return (
     <ul className={cn('flex gap-1', className)}>
       {[...Array(count)].map((_, i) => (
-        <li>
+        <li key={i}>
           <Star
             className="cursor-pointer"
             full={rating ? rating >= i + 1 : selectedRating >= i + 1}

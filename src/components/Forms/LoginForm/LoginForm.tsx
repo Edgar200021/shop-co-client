@@ -6,7 +6,7 @@ import { cn } from '../../../utils/cn'
 import { RegisterSchema } from '../../../schemas/register-schema'
 import { authApi } from '../../../store/auth/api'
 import toast from 'react-hot-toast'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
   className?: string
@@ -15,10 +15,10 @@ interface Props {
 export default function LoginForm({ className }: Props) {
   const { handleSubmit, control, reset } =
     useForm<Pick<RegisterSchema, 'email' | 'password'>>()
+  const navigate = useNavigate()
 
-  const [login, {data, isLoading, isSuccess }] = authApi.useLoginMutation()
+  const [login, { isLoading }] = authApi.useLoginMutation()
 
-  console.log(data)
   const onSubmit: SubmitHandler<
     Pick<RegisterSchema, 'email' | 'password'>
   > = async data => {
@@ -27,12 +27,9 @@ export default function LoginForm({ className }: Props) {
       .then(() => {
         toast.success('Success!')
         reset()
+        navigate('/user/account')
       })
       .catch(err => toast.error(err.data.msg, { duration: 6000 }))
-  }
-
-  if (isSuccess) {
-	return <Navigate to='/user/account'/>
   }
 
   return (

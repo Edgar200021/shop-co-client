@@ -20,8 +20,8 @@ export default function Star({
     return (
       <svg
         onMouseEnter={onMouseEnter}
-		onMouseLeave={onMouseLeave}
-		onClick={onClick}
+        onMouseLeave={onMouseLeave}
+        onClick={onClick}
         className={cn('w-5 h-5  fill-yellow-300 ', className)}
       >
         <use xlinkHref={`${sprite}#star`} />
@@ -33,7 +33,7 @@ export default function Star({
     <svg
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-	  onClick={onClick}
+      onClick={onClick}
       className={cn('w-5 h-5  fill-black ', className)}
     >
       <use xlinkHref={`${sprite}#star`} />

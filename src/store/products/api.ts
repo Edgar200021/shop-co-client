@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IProduct } from './types'
+import { IProduct, IProductRequest } from './types'
 //import type { Pokemon } from './types'
 
 // Define a service using a base URL and expected endpoints
@@ -21,6 +21,51 @@ export const productApi = createApi({
           category: params.category,
           sort: params.sort,
         },
+      }),
+    }),
+    getProduct: builder.query<IProduct, number>({
+      query: id => ({
+        url: `/${id}`,
+      }),
+    }),
+
+    createProduct: builder.mutation<IProduct, IProductRequest>({
+      query: body => ({
+        url: '',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body,
+      }),
+    }),
+    updateProduct: builder.mutation<
+      IProduct,
+      { product: IProductRequest; id: number }
+    >({
+      query: body => ({
+        url: `/${body.id}`,
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body.product,
+      }),
+    }),
+
+    uploadProductImage: builder.mutation<
+      {
+        image: {
+          src: string
+        }
+      },
+      FormData
+    >({
+      query: body => ({
+        url: 'uploadImage',
+        method: 'POST',
+
+        body,
       }),
     }),
   }),

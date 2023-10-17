@@ -8,7 +8,6 @@ import { store } from './store/store.ts'
 import './styles/index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
     <Provider store={store}>
       <App />
       <Toaster
@@ -26,5 +25,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         }}
       />
     </Provider>
-  </React.StrictMode>
 )
