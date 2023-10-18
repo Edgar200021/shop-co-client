@@ -13,12 +13,16 @@ import { productApi } from '../../../store/products/api'
 import emptyImage from '../../../assets/images/empty.jpg'
 import { cn } from '../../../utils/cn'
 import toast from 'react-hot-toast'
+import { IProduct } from '../../../store/products/types'
 
 interface Props {
   className?: string
+  defaultValues?: IProduct
+
+  close?: () => void
 }
 
-export default function ProductForm({ className }: Props) {
+export default function ProductForm({ className, defaultValues }: Props) {
   const {
     handleSubmit,
     control,
@@ -26,19 +30,32 @@ export default function ProductForm({ className }: Props) {
     formState: { errors },
   } = useForm<ProductSchema>({
     resolver: zodResolver(productSchema),
+    defaultValues: defaultValues
+      ? {
+          title: defaultValues.title,
+          description: defaultValues.description,
+          price: defaultValues.price,
+          discount: defaultValues.discount,
+        }
+      : {},
   })
+
   const [properties, setProperties] = useState({
-    colors: ['#fff'],
-    size: ['Small'],
-    category_id: 0,
-    image: '',
+    colors: defaultValues?.colors || ['#fff'],
+    size: defaultValues?.size || ['Small'],
+    category_id: defaultValues?.category_id ?? 0,
+    image: defaultValues?.image ?? '',
   })
+
   const [propertyErrors, setPropertyErrors] = useState({
     colors: '',
     size: '',
     category_id: '',
     image: '',
   })
+
+  console.log(defaultValues)
+  console.log(properties)
 
   const [uploadImage, { isLoading }] =
     productApi.useUploadProductImageMutation()
@@ -69,7 +86,16 @@ export default function ProductForm({ className }: Props) {
 
     createProduct({ ...data, ...properties })
       .unwrap()
-      .then(() => toast.success('Success', { duration: 500 }))
+      .then(() => {
+        toast.success('Success', { duration: 500 })
+        reset({ price: 0, title: '', description: '', discount: 0 })
+        setProperties({
+          colors: ['#fff'],
+          size: ['Small'],
+          category_id: 0,
+          image: '',
+        })
+      })
       .catch(err => toast.error(err.data.msg, { duration: 500 }))
   }
 
@@ -95,10 +121,6 @@ export default function ProductForm({ className }: Props) {
       .unwrap()
       .then(data => setProperties({ ...properties, image: data.image.src }))
       .catch(err => toast(err.data.msg, { duration: 5000 }))
-  }
-
-  if (errors) {
-    console.log(errors)
   }
 
   return (
@@ -146,6 +168,7 @@ export default function ProductForm({ className }: Props) {
           <div className="flex flex-wrap gap-2 bg-[#f0f0f0] rounded-lg items-center px-5 py-3">
             {COLORS.map((color, i) => (
               <label
+                key={color.value}
                 className={` w-8 h-8 rounded-full inline-block cursor-pointer relative`}
                 style={{ backgroundColor: color.value }}
               >
@@ -172,7 +195,10 @@ export default function ProductForm({ className }: Props) {
           </div>
           <div className="flex flex-wrap gap-2 bg-[#f0f0f0] px-5  rounded-lg items-center text-white py-3">
             {SIZE.map((size, i) => (
-              <label className="bg-black rounded-3xl px-2 py-2 cursor-pointer relative">
+              <label
+                key={size.value}
+                className="bg-black rounded-3xl px-2 py-2 cursor-pointer relative"
+              >
                 <Input
                   type="checkbox"
                   variant={InputVariants.PRIMARY}
@@ -211,14 +237,14 @@ export default function ProductForm({ className }: Props) {
             /* @ts-ignore */
             options={CATEGORY}
             placeholder="Choose product category"
-            /* @ts-ignore */
             onChange={value =>
+              /* @ts-ignore */
               setProperties({ ...properties, category_id: value!.value })
             }
           />
         </div>
         <div>
-          <div className="w-80 h-80">
+          <div className="w-80 h-80 mb-20">
             <img
               className={cn({ 'blur-lg': isLoading })}
               src={properties.image ? properties.image : emptyImage}
@@ -230,6 +256,7 @@ export default function ProductForm({ className }: Props) {
             onChange={uploadProductImage}
             type="file"
             variant={InputVariants.PRIMARY}
+            accept="image/png, image/jpg, image/jpeg"
             className="disabled:cursor-wait"
           />
         </div>

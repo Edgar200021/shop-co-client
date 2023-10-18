@@ -6,11 +6,16 @@ import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import VerifyAccount from './pages/VerifyAccount'
-import AccountPage from './pages/AccountPage'
+import AccountPage from './pages/AccountMainPage'
 import AdminLayout from './layouts/AdminLayout'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import AdminProductsLayout from './layouts/AdminProductsLayout'
 import AdminProductsPage from './pages/AdminProductsPage'
+import AdminAddProductPage from './pages/AdminAddProductPage'
+import AccountLayout from './layouts/AccountLayout'
+import AccountMainPage from './pages/AccountMainPage'
+import AccountFavoritePage from './pages/AccountFavoritePage'
+import AccountAddressPage from './pages/AccountAddressPage'
 
 const router = createBrowserRouter([
   {
@@ -29,7 +34,29 @@ const router = createBrowserRouter([
         path: 'auth/verify-account',
         element: <VerifyAccount className="pt-20 mb-40" />,
       },
-      { path: 'user/account', element: <AccountPage /> },
+      {
+        element: (
+          <ProtectedRoute>
+            <AccountLayout className="pt-24 pb-16" />
+          </ProtectedRoute>
+        ),
+        path: 'user/account',
+        children: [
+          {
+            element: <AccountMainPage />,
+            path: 'orders',
+			index: true
+          },
+          {
+            element: <AccountFavoritePage />,
+            path: 'favorite',
+          },
+          {
+            element: <AccountAddressPage />,
+            path: 'addresses',
+          },
+        ],
+      },
     ],
   },
   {
@@ -46,8 +73,8 @@ const router = createBrowserRouter([
         children: [
           { element: <AdminProductsPage />, index: true },
           {
-            path: 'add',
-            element: <h1>Add product</h1>,
+            path: 'addProduct',
+            element: <AdminAddProductPage />,
           },
         ],
       },

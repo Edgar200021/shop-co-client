@@ -1,26 +1,31 @@
 import { ReactElement, createContext, useContext, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '../../utils/cn'
+import { useOutsideClick } from '../../hooks/useOutsideClick'
 
 interface IModalContext {
   handleCloseModal: () => void
-  open: React.Dispatch<React.SetStateAction<string>>
+  open: (name: string) => void
   modalName: string
 }
 
 const ModalContext = createContext<IModalContext | null>(null)
 
 interface Props {
-  children: string
+  children: ReactElement
 }
 
 export default function Modal({ children }: Props) {
   const [modalName, setModalName] = useState('')
 
-  const open = setModalName
+  const open = (name: string) => {
+    setModalName(name)
+    document.body.style.overflow = 'hidden'
+  }
 
   const handleCloseModal = () => {
     setModalName('')
+    document.body.style.overflow = 'auto'
   }
 
   return (
@@ -31,9 +36,7 @@ export default function Modal({ children }: Props) {
 }
 
 interface OpenProps {
-  renderButton: (
-    arg: React.Dispatch<React.SetStateAction<string>>
-  ) => ReactElement
+  renderButton: (arg: (name: string) => void) => ReactElement
 }
 
 const Open = ({ renderButton }: OpenProps) => {
@@ -50,12 +53,12 @@ interface WindowProps {
 
 const Window = ({ renderContent, className, name }: WindowProps) => {
   const { modalName, handleCloseModal } = useContext(ModalContext)!
-
+  const ref = useOutsideClick(handleCloseModal, true)
   if (modalName !== name) return null
 
   return createPortal(
-    <div className="absolute left-0 top-0 w-full h-full backdrop-blur-2xl flex justify-center items-center">
-      <div className={cn('bg-black rounded-3xl p-4', className)}>
+    <div className="absolute left-0 top-0 w-full h-full backdrop-blur-lg flex justify-center items-center ">
+      <div ref={ref} className={cn('bg-gray-300 rounded-3xl', className)}>
         {renderContent(handleCloseModal)}
       </div>
     </div>,

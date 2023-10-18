@@ -5,6 +5,7 @@ import { IProduct, IProductRequest } from './types'
 // Define a service using a base URL and expected endpoints
 export const productApi = createApi({
   reducerPath: 'products',
+  tagTypes: ['Products'],
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1/products',
   }),
@@ -22,6 +23,7 @@ export const productApi = createApi({
           sort: params.sort,
         },
       }),
+      providesTags: result => ['Products'],
     }),
     getProduct: builder.query<IProduct, number>({
       query: id => ({
@@ -38,6 +40,7 @@ export const productApi = createApi({
         },
         body,
       }),
+      invalidatesTags: ['Products'],
     }),
     updateProduct: builder.mutation<
       IProduct,
@@ -51,6 +54,14 @@ export const productApi = createApi({
         },
         body: body.product,
       }),
+      invalidatesTags: ['Products'],
+    }),
+    deleteProduct: builder.mutation<string, number>({
+      query: id => ({
+        url: `/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Products'],
     }),
 
     uploadProductImage: builder.mutation<

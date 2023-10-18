@@ -2,6 +2,7 @@ export interface IUserResponse {
   userId: number
   name: string
   role: 'user' | 'admin'
+  email: string
 }
 
 export interface IUserRequest {

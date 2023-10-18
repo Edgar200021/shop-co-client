@@ -41,22 +41,22 @@ export default function MainPage({ className }: Props) {
           </Button>
         </div>
       </section>
-      <section className='mb-20'>
+      <section className="mb-20">
         <div className="max-w-7xl mx-auto px-clamp bg-[#F0F0F0] rounded-2xl">
           <div className="py-[70px] px-16">
             <h2 className="uppercase text-5xl font-bold text-center mb-16">
               BROWSE BY dress STYLE
             </h2>
             <div className="grid grid-cols-[repeat(8,118px)] grid-rows-[repeat(2,300px)] gap-5 [&>div]:bg-white [&>div]:rounded-2xl [&>div]:bg-no-repeat [&>div]:bg-right-bottom [&>div]:bg-cover">
-              <div className="col-span-3 bg-casual">hello</div>
-              <div className="col-span-5 bg-formal">hello</div>
-              <div className="col-span-5 bg-party">hello</div>
-              <div className="col-span-3 bg-gym">hello</div>
+              <div className="col-span-3 bg-casual" />
+              <div className="col-span-5 bg-formal" />
+              <div className="col-span-5 bg-party" />
+              <div className="col-span-3 bg-gym" />
             </div>
           </div>
         </div>
       </section>
-      <Newsletter className='translate-y-20' />
+      <Newsletter className="translate-y-20" />
     </main>
   )
 }

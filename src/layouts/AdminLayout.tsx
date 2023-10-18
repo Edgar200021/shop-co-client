@@ -14,7 +14,7 @@ export default function AdminLayout({ className }: Props) {
         className
       )}
     >
-      <AdminSidebar />
+      <AdminSidebar/>
       <div className='grow'>
         <Outlet />
       </div>

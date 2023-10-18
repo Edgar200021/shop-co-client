@@ -6,14 +6,16 @@ import { IUserResponse } from '../auth/types'
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
   reducerPath: 'user',
+  tagTypes: ['User'],
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1/users',
   }),
   endpoints: builder => ({
-    showMe: builder.query<{user:IUserResponse}, ''>({
+    showMe: builder.query<{ user: IUserResponse }, ''>({
       query: () => ({
         url: '/showMe',
       }),
+      providesTags: result => ['User'],
     }),
 
     getAllUsers: builder.query({
@@ -25,23 +27,25 @@ export const userApi = createApi({
     updateUser: builder.mutation<{ msg: string }, IUpdateUserRequest>({
       query: body => ({
         url: '/updateUser',
-        method: 'POST',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body,
       }),
+      invalidatesTags: ['User'],
     }),
 
     updatePassword: builder.mutation<{ msg: string }, IUpdatePasswordRequest>({
       query: body => ({
         url: '/updateUserPassword',
-        method: 'POST',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body,
       }),
+      invalidatesTags: ['User'],
     }),
     deleteUser: builder.mutation<{ msg: string }, number>({
       query: id => ({

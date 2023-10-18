@@ -15,9 +15,10 @@ interface Props {
 export default function LoginForm({ className }: Props) {
   const { handleSubmit, control, reset } =
     useForm<Pick<RegisterSchema, 'email' | 'password'>>()
-  const navigate = useNavigate()
 
   const [login, { isLoading }] = authApi.useLoginMutation()
+
+  const navigate = useNavigate()
 
   const onSubmit: SubmitHandler<
     Pick<RegisterSchema, 'email' | 'password'>
@@ -27,7 +28,7 @@ export default function LoginForm({ className }: Props) {
       .then(() => {
         toast.success('Success!')
         reset()
-        navigate('/user/account')
+        navigate('/user/account/orders')
       })
       .catch(err => toast.error(err.data.msg, { duration: 6000 }))
   }
