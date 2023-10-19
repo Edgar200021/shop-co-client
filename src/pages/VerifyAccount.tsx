@@ -23,8 +23,6 @@ export default function VerifyAccount({ className }: Props) {
         await verificateAccount({ email, verificationToken })
       })()
     }
-
-    // eslint-disable-rule
   }, [email, verificateAccount, verificationToken])
 
   useEffect(() => {
@@ -48,12 +46,10 @@ export default function VerifyAccount({ className }: Props) {
   return (
     <main className={className}>
       <div className="max-w-7xl mx-auto px-clamp">
-        <div className='max-w-[800px] w-full'>
+        <div className="max-w-[800px] w-full">
           {isError ? (
             <>
-              <h1 className="text-5xl font-bold mb-3">
-                There are an error ⛔{' '}
-              </h1>
+              <h1 className="text-5xl font-bold mb-3">There are an error ⛔</h1>
               <span className="text-3xl text-black/60">{error?.data.msg}</span>
             </>
           ) : (

@@ -8,6 +8,10 @@ import Button, { ButtonVariants } from '../ui/Button/Button'
 import { authApi } from '../../store/auth/api'
 import PageLoader from '../ui/PageLoader/PageLoader'
 
+import basket from '../../assets/icons/basket.svg'
+import user from '../../assets/icons/user.svg'
+import logoutIcon from '../../assets/icons/logout.svg'
+
 interface Props {
   className?: string
 }
@@ -36,19 +40,25 @@ export default function Header({ className }: Props) {
           <Button
             variant={ButtonVariants.CLEAR}
             to="/user/basket"
-            className="bg-basket w-6 h-6 hover:-translate-y-1"
-          ></Button>
+            className="w-6 h-6 hover:-translate-y-1"
+          >
+            <img src={basket} alt="Basket" />
+          </Button>
           <Button
             variant={ButtonVariants.CLEAR}
             to="/user/account/orders"
-            className="bg-user w-6 h-6 hover:-translate-y-1"
-          />
+            className=" w-6 h-6 hover:-translate-y-1"
+          >
+            <img src={user} alt="User" />
+          </Button>
           {data?.user && (
             <Button
               variant={ButtonVariants.CLEAR}
-              className="bg-logout w-6 h-6 hover:-translate-y-1"
+              className=" w-6 h-6 hover:-translate-y-1"
               onClick={handleLogout}
-            />
+            >
+              <img src={logoutIcon} alt="Logout" />
+            </Button>
           )}
         </div>
       </div>

@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute roles={['admin', 'user']}>
             <AccountLayout className="pt-24 pb-16" />
           </ProtectedRoute>
         ),
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
           {
             element: <AccountMainPage />,
             path: 'orders',
-			index: true
+            index: true,
           },
           {
             element: <AccountFavoritePage />,

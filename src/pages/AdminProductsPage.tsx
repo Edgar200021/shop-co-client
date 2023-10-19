@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast'
 import BasketProduct from '../components/BasketProduct/BasketProduct'
 import PageLoader from '../components/ui/PageLoader/PageLoader'
 import { productApi } from '../store/products/api'
@@ -10,14 +11,12 @@ export default function AdminProductsPage({ className }: Props) {
   const { data, isLoading, isError } = productApi.useGetProductsQuery({})
   const [
     deleteProduct,
-    { isLoading: isDeleteLoading, isError: isDeleteError },
+    { isLoading: isDeleteLoading},
   ] = productApi.useDeleteProductMutation()
 
   if (isLoading && isDeleteLoading) {
     return <PageLoader />
   }
-
-  console.log(isDeleteLoading)
 
   return (
     <main className={className}>
@@ -38,7 +37,14 @@ export default function AdminProductsPage({ className }: Props) {
               </div>
               <div className="ml-auto space-x-2">
                 <BasketProduct.Delete
-                  handleDelete={() => deleteProduct(product.id)}
+                  handleDelete={() =>
+                    deleteProduct(product.id)
+                      .unwrap()
+                      .then(() => toast.success('success', { duration: 5000 }))
+                      .catch(err =>
+                        toast.error(err.data.msg, { duration: 500 })
+                      )
+                  }
                 />
                 <BasketProduct.Update />
               </div>

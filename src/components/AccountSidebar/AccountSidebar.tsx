@@ -5,6 +5,12 @@ import UpdateUserForm from '../Forms/UpdateUserForm/UpdateUserForm'
 import Modal from '../Modal/Modal'
 import Button, { ButtonVariants } from '../ui/Button/Button'
 
+import ordersIcon from '../../assets/icons/orders.svg'
+import hearthIcon from '../../assets/icons/hearth.svg'
+import locationIcon from '../../assets/icons/location.svg'
+import sunIcon from '../../assets/icons/sun.svg'
+import pencil from '../../assets/icons/pencil.svg'
+
 interface Props {
   className?: string
   user: IUserResponse
@@ -27,7 +33,7 @@ export default function AccountSidebar({ className, user }: Props) {
               className="hover:bg-orange-600 duration-300 transition-colors ease aria-[current=page]:bg-orange-600"
               variant={ButtonVariants.PRIMARY}
             >
-              <span className="inline-block w-[46px] h-[46px] rounded-lg  bg-white  relative before:absolute before:content-[''] before:w-8 before:h-8 before:left-[50%] before:top-[50%] before:translate-y-[-50%] before:translate-x-[-50%] before:bg-orders before:bg-contain"></span>
+              <img width={48} height={48} src={ordersIcon} alt="Orders" />
               <span>История заказов</span>
             </Button>
           </li>
@@ -37,7 +43,7 @@ export default function AccountSidebar({ className, user }: Props) {
               className="hover:bg-orange-600 duration-300 transition-colors ease whitespace-nowrap aria-[current=page]:bg-orange-600"
               variant={ButtonVariants.PRIMARY}
             >
-              <span className="inline-block w-[46px] h-[46px] rounded-lg  bg-white relative before:absolute before:content-[''] before:w-8 before:h-8 before:left-[50%] before:top-[50%] before:translate-y-[-50%] before:translate-x-[-50%] before:bg-hearth before:bg-contain"></span>
+              <img width={48} height={48} src={hearthIcon} alt="Hearth" />
               <span> Избранные товары</span>
             </Button>
           </li>
@@ -47,7 +53,7 @@ export default function AccountSidebar({ className, user }: Props) {
               className="hover:bg-orange-600 duration-300 transition-colors ease aria-[current=page]:bg-orange-600"
               variant={ButtonVariants.PRIMARY}
             >
-              <span className="inline-block w-[46px] h-[46px] rounded-lg  bg-white relative before:absolute before:content-[''] before:w-8 before:h-8 before:left-[50%] before:top-[50%] before:translate-y-[-50%] before:translate-x-[-50%] before:bg-location before:bg-contain"></span>
+              <img width={48} height={48} src={locationIcon} alt="Location" />
               <span> Адрес доставки</span>
             </Button>
           </li>
@@ -56,7 +62,7 @@ export default function AccountSidebar({ className, user }: Props) {
               variant={ButtonVariants.PRIMARY}
               className="hover:bg-orange-600 duration-300 transition-colors ease aria-[current=page]:bg-orange-600"
             >
-              <span className="inline-block w-[46px] h-[46px] rounded-lg  bg-white relative before:absolute before:content-[''] before:w-8 before:h-8 before:left-[50%] before:top-[50%] before:translate-y-[-50%] before:translate-x-[-50%] before:bg-sun before:bg-contain"></span>
+              <img width={48} height={48} src={sunIcon} alt="Sun" />
               <span> Тема сайта</span>
             </Button>
           </li>
@@ -80,8 +86,10 @@ export default function AccountSidebar({ className, user }: Props) {
                       <Button
                         onClick={() => open('update-user')}
                         variant={ButtonVariants.CLEAR}
-                        className='rounded-md w-6 h-6 relative bg-gray-100 before:absolute before:content-[""] before:w-4 before:h-4 before:left-[50%] before:top-[50%] before:bg-pencil before:bg-contain before:bg-no-repeat before:translate-x-[-50%] before:translate-y-[-50%] hover:-translate-y-1 transition-transform duration-300 ease hover:bg-orange-600'
-                      />
+                        className="rounded-md w-6 h-6 inline-flex items-center justify-center bg-gray-100 hover:-translate-y-1 transition-transform duration-300 ease hover:bg-orange-600"
+                      >
+                        <img src={pencil} alt="pencil" width={14} height={14}/>
+                      </Button>
                     )}
                   />
                   <Modal.Window

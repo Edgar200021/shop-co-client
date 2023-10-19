@@ -15,7 +15,7 @@ interface Props {
   id: number
   image: string
   title: string
-  size: string
+  size: string[] | string
   colors: string[] | string
   price: number
   count?: number

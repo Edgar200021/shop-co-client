@@ -57,8 +57,13 @@ const Window = ({ renderContent, className, name }: WindowProps) => {
   if (modalName !== name) return null
 
   return createPortal(
-    <div className="absolute left-0 top-0 w-full h-full backdrop-blur-lg flex justify-center items-center ">
-      <div ref={ref} className={cn('bg-gray-300 rounded-3xl', className)}>
+    <div
+      className={cn(
+        'absolute left-0 top-0 w-full h-full backdrop-blur-lg flex justify-center items-center ',
+        className
+      )}
+    >
+      <div ref={ref} className={cn('bg-gray-300 rounded-3xl')}>
         {renderContent(handleCloseModal)}
       </div>
     </div>,

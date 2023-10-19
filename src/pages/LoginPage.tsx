@@ -1,4 +1,4 @@
-import LoginForm from "../components/Forms/LoginForm/LoginForm"
+import LoginForm from '../components/Forms/LoginForm/LoginForm'
 
 interface Props {
   className?: string
@@ -12,8 +12,4 @@ export default function LoginPage({ className }: Props) {
       </section>
     </main>
   )
-}
-
-interface Props {
-  className?: string
 }

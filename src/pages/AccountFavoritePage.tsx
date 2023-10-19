@@ -7,7 +7,7 @@ interface Props {
 export default function AccountFavoritePage({ className }: Props) {
   return (
     <div className={className}>
-      <h1 className="text-5xl font-bold mb-6">History of orders</h1>
+      <h1 className="text-5xl font-bold mb-6">Featured Products</h1>
       <section>
         <Empty type="favorite" />
       </section>

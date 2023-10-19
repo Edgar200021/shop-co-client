@@ -7,6 +7,7 @@ import { RegisterSchema } from '../../../schemas/register-schema'
 import { authApi } from '../../../store/auth/api'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { userApi } from '../../../store/user/api'
 
 interface Props {
   className?: string
@@ -17,6 +18,7 @@ export default function LoginForm({ className }: Props) {
     useForm<Pick<RegisterSchema, 'email' | 'password'>>()
 
   const [login, { isLoading }] = authApi.useLoginMutation()
+  const [trigger] = userApi.useLazyShowMeQuery()
 
   const navigate = useNavigate()
 
@@ -26,8 +28,8 @@ export default function LoginForm({ className }: Props) {
     await login(data)
       .unwrap()
       .then(() => {
-        toast.success('Success!')
         reset()
+        trigger('')
         navigate('/user/account/orders')
       })
       .catch(err => toast.error(err.data.msg, { duration: 6000 }))
