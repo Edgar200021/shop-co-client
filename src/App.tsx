@@ -16,6 +16,7 @@ import AccountLayout from './layouts/AccountLayout'
 import AccountMainPage from './pages/AccountMainPage'
 import AccountFavoritePage from './pages/AccountFavoritePage'
 import AccountAddressPage from './pages/AccountAddressPage'
+import SingleProductPage from './pages/SingleProductPage'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: 'auth/verify-account',
         element: <VerifyAccount className="pt-20 mb-40" />,
+      },
+      {
+        path: 'product/:id',
+        element: <SingleProductPage className="pt-20 pb-44" />,
       },
       {
         element: (

@@ -25,7 +25,7 @@ export const productApi = createApi({
       }),
       providesTags: result => ['Products'],
     }),
-    getProduct: builder.query<IProduct, number>({
+    getProduct: builder.query<{ product: IProduct }, number>({
       query: id => ({
         url: `/${id}`,
       }),

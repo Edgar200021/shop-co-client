@@ -8,7 +8,7 @@ export interface IProduct {
   discounted_price: number
   rating: number
   category: string
-  size: string[]
+  size: string
   colors: string[]
   category_id?: number
 }

@@ -24,7 +24,6 @@ export default function ProductList({ className, limit }: Props) {
     return <h1 className="text-5xl font-bold">There are no product</h1>
   }
 
-
   return (
     <ul
       className={cn(
