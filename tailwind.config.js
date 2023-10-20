@@ -42,6 +42,7 @@ export default {
       },
       gridTemplateColumns: {
         'product-list': 'repeat(auto-fill, minmax(250px, 1fr))',
+        'review-list': 'repeat(auto-fit, minmax(350px, 1fr))',
       },
     },
   },

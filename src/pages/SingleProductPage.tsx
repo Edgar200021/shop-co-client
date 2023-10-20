@@ -5,6 +5,7 @@ import SingleProduct from '../components/SingleProduct/SingleProduct'
 import { reviewApi } from '../store/review/api'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
+import Reviews from '../components/Reviews/Reviews'
 
 interface Props {
   className?: string
@@ -15,36 +16,21 @@ export default function SingleProductPage({ className }: Props) {
   const { data, isLoading, isError, error } = productApi.useGetProductQuery(
     Number(id)
   )
-  const {
-    data: reviewData,
-    isLoading: isReviewLoading,
-    isError: isReviewError,
-    error: reviewError,
-  } = reviewApi.useGetAllReviewsQuery({ productId: Number(id) })
-
-  console.log(reviewData)
 
   useEffect(() => {
     if (error) {
-      console.log(error)
-      //  toast.error(error.data.msg, { duration: 5000 })
+      toast.error(error.data.msg, { duration: 5000 })
     }
-    if (isReviewError) {
-      console.log(error)
-      //  toast.error(reviewError.data.msg, { duration: 5000 })
-    }
-  }, [isReviewError, isError, error, reviewError])
+  }, [isError, error])
 
-  if (isLoading || isReviewLoading) return <PageLoader />
+  if (isLoading) return <PageLoader />
 
   if (!data) return null
 
   return (
     <main className={className}>
       <SingleProduct className="mb-40" {...data.product} />
-      <div className="max-w-7xl mx-auto px-clamp">
-        <span className="text-2xl font-bold">All reviews ({reviewData?.reviews.length})</span>
-      </div>
+      <Reviews productId={Number(id)} />
     </main>
   )
 }

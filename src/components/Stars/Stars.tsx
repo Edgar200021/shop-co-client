@@ -6,13 +6,14 @@ interface Props {
   className?: string
   count?: number
   averageRating: number
+  onRating: (rating: number) => void
 }
 
 export default function ProductStars({
   className,
   count = 5,
   averageRating = 0,
-}: Props) {
+}: Omit<Props, 'onRating'>) {
   return (
     <ul className={cn('flex gap-1', className)}>
       {[...Array(count)].map((_, i) => (
@@ -27,6 +28,7 @@ export default function ProductStars({
 export const ProductReviewStars = ({
   className,
   count = 5,
+  onRating,
 }: Omit<Props, 'averageRating'>) => {
   const [selectedRating, setSelectedRating] = useState(0)
   const [rating, setRating] = useState(0)
@@ -36,7 +38,8 @@ export const ProductReviewStars = ({
   }
 
   function handleSelectedRating(num: number) {
-	setSelectedRating(num)
+    setSelectedRating(num)
+    onRating(num)
   }
 
   return (
@@ -48,7 +51,7 @@ export const ProductReviewStars = ({
             full={rating ? rating >= i + 1 : selectedRating >= i + 1}
             onMouseLeave={() => handleRating(0)}
             onMouseEnter={() => handleRating(i + 1)}
-			onClick={() => handleSelectedRating(i + 1)}
+            onClick={() => handleSelectedRating(i + 1)}
           />
         </li>
       ))}

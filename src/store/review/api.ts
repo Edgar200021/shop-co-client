@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IRevewRequest, IReviewResponse } from './types'
+import { IRevewRequest, IReviewResponse, SortReview } from './types'
 //import type { Pokemon } from './types'
 
 // Define a service using a base URL and expected endpoints
@@ -12,12 +12,13 @@ export const reviewApi = createApi({
   endpoints: builder => ({
     getAllReviews: builder.query<
       { reviews: IReviewResponse[] },
-      { productId: number; limit?: number; sort?: string }
+      { productId: number; limit?: number; sort?: SortReview }
     >({
-      query: ({ productId, limit = 6 }) => ({
+      query: ({ productId, limit = 6, sort }) => ({
         url: `allReviews/${productId}`,
         params: {
           limit: limit,
+          sort: sort || SortReview.DATE_ASC,
         },
       }),
       providesTags: result => ['Review'],
@@ -35,7 +36,7 @@ export const reviewApi = createApi({
         url: `/${body.id}`,
         method: 'POST',
         headers: {
-          'Content-Type:': 'application/json',
+          'Content-Type': 'application/json',
         },
         body: { rating: body.rating, text: body.text },
       }),
