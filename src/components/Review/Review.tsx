@@ -17,7 +17,7 @@ export default function Review({
   rating,
   created_at,
 }: Props) {
-  console.log(new Date(created_at))
+
   return (
     <li
       className={cn(

@@ -54,9 +54,6 @@ export default function ProductForm({ className, defaultValues }: Props) {
     image: '',
   })
 
-  console.log(defaultValues)
-  console.log(properties)
-
   const [uploadImage, { isLoading }] =
     productApi.useUploadProductImageMutation()
   const [createProduct, { isLoading: isProductLoading }] =

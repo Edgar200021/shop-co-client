@@ -17,6 +17,7 @@ import AccountMainPage from './pages/AccountMainPage'
 import AccountFavoritePage from './pages/AccountFavoritePage'
 import AccountAddressPage from './pages/AccountAddressPage'
 import SingleProductPage from './pages/SingleProductPage'
+import BasketPage from './pages/BasketPage'
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: 'product/:id',
         element: <SingleProductPage className="pt-20 pb-44" />,
+      },
+      {
+        path: 'user/basket',
+        element: (
+          <ProtectedRoute roles={['admin', 'user']}>
+            <BasketPage className='pt-[70px] pb-[170px]' />
+          </ProtectedRoute>
+        ),
       },
       {
         element: (

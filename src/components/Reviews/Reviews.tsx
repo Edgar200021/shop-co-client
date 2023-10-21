@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function Reviews({ className, productId }: Props) {
-  const [sortQuery, setSortQuery] = useState<SortReview>(SortReview.DATE_ASC)
+  const [sortQuery, setSortQuery] = useState<SortReview>(SortReview.DATE_DESC)
 
   const { data, isLoading, isError, error } = reviewApi.useGetAllReviewsQuery(
     {
@@ -73,9 +73,9 @@ export default function Reviews({ className, productId }: Props) {
           </Modal>
         </div>
       </div>
-      <ul className="grid grid-cols-review-list">
+      <ul className="grid grid-cols-review-list gap-5">
         {data?.reviews.map(review => (
-          <Review {...review}  />
+          <Review {...review} />
         ))}
       </ul>
     </div>

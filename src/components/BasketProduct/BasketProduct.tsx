@@ -9,6 +9,7 @@ import Modal from '../Modal/Modal'
 import ProductForm from '../Forms/ProductForm/ProductForm'
 import { productApi } from '../../store/products/api'
 import PageLoader from '../ui/PageLoader/PageLoader'
+import { basketApi } from '../../store/basket/api'
 
 interface Props {
   className?: string
@@ -36,7 +37,6 @@ export default function BasketProduct({
   size,
   colors,
   count,
-
   children,
 }: Props) {
   return (
@@ -66,7 +66,6 @@ function BasketProductTitle({ className }: { className?: string }) {
 function BasketProductSize({ className }: { className?: string }) {
   const { size } = useContext(BasketProductContext)!
 
-  console.log(typeof size)
   return (
     <div className={cn('text-sm', className)}>
       <span className="mr-1">Size:</span>
@@ -126,8 +125,6 @@ function BasketProductUpdate({ className }: { className?: string }) {
 
   const [trigger, result] = productApi.useLazyGetProductQuery()
 
-  console.log(result.data)
-
   return (
     <Modal>
       <>
@@ -152,7 +149,7 @@ function BasketProductUpdate({ className }: { className?: string }) {
             result.isLoading || !result.data ? (
               <PageLoader />
             ) : (
-              <ProductForm close={close} defaultValues={result.data} />
+              <ProductForm close={close} defaultValues={result.data.product} />
             )
           }
         />
@@ -161,6 +158,49 @@ function BasketProductUpdate({ className }: { className?: string }) {
   )
 }
 
+function BasketProductCount({ className }: { className?: string }) {
+  const [updateBasketProduct, { isLoading }] =
+    basketApi.useUpdateBasketProductMutation()
+
+  const { count, id } = useContext(BasketProductContext)!
+
+  function decrement() {
+    if (!count || count <= 1) return
+
+    updateBasketProduct({ id, count: count - 1 })
+  }
+  function increment() {
+    if (!count) return
+
+    updateBasketProduct({ id, count: count + 1 })
+  }
+
+  return (
+    <div
+      className={cn(
+        'max-w-[126px] font-bold text-2xl min-w-[105px] w-full rounded-full bg-[#F0F0F0] px-5 py-[12px] flex items-center justify-between',
+        className,
+		{'bg-gray-50': isLoading}
+      )}
+    >
+      <Button
+        disabled={isLoading}
+        onClick={decrement}
+        variant={ButtonVariants.CLEAR}
+      >
+        -
+      </Button>
+      <span>{count && count}</span>
+      <Button
+        disabled={isLoading}
+        onClick={increment}
+        variant={ButtonVariants.CLEAR}
+      >
+        +
+      </Button>
+    </div>
+  )
+}
 BasketProduct.Image = BasketProductImage
 BasketProduct.Title = BasketProductTitle
 BasketProduct.Size = BasketProductSize
@@ -168,3 +208,4 @@ BasketProduct.Colors = BasketProductColors
 BasketProduct.Price = BasketProductPrice
 BasketProduct.Delete = BasketProductDelete
 BasketProduct.Update = BasketProductUpdate
+BasketProduct.Count = BasketProductCount

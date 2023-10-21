@@ -2,9 +2,12 @@ import { useState } from 'react'
 import { cn } from '../../utils/cn'
 import ProductStars from '../Stars/Stars'
 import Button, { ButtonVariants } from '../ui/Button/Button'
+import { basketApi } from '../../store/basket/api'
+import toast from 'react-hot-toast'
 
 interface Props {
   className?: string
+  id: number
   image: string
   title: string
   rating: number
@@ -18,6 +21,7 @@ interface Props {
 
 export default function SingleProduct({
   className,
+  id,
   image,
   title,
   rating,
@@ -28,13 +32,32 @@ export default function SingleProduct({
   size,
   discount,
 }: Props) {
-  const [color, setColor] = useState(colors[0])
-  const [productSize, setProductSize] = useState(
-    size.slice(1, size.length - 1).split(',')[0]
-  )
-  const [count, setCount] = useState(1)
+  const [properties, setProperties] = useState({
+    color: colors[0],
+    size: size.slice(1, size.length - 1).split(',')[0],
+    count: 1,
+  })
 
-  console.log(color)
+  const [addProduct, { isLoading }] = basketApi.useAddBasketProductMutation()
+
+  function addBasketProduct() {
+    addProduct({
+      productId: id,
+      color: properties.color,
+      size: properties.size,
+      count: properties.count,
+    })
+      .unwrap()
+      .then(() => {
+        setProperties({
+          color: colors[0],
+          size: size.slice(1, size.length - 1).split(',')[0],
+          count: 1,
+        })
+        toast.success('Success', { duration: 5000 })
+      })
+      .catch(err => toast.error(err.data.msg, { duration: 5000 }))
+  }
 
   return (
     <div
@@ -64,22 +87,30 @@ export default function SingleProduct({
             </>
           )}
         </div>
-        <p className="max-w-xl text-base text-black/60 pb-6 border-b-[1px] border-b-solid  border-b-black/10 mb-6">
-          {description}
-        </p>
+        <div className="border-b-[1px] border-b-solid  border-b-black/10 mb-6">
+          <p className="max-w-xl text-base text-black/60 pb-6 ">
+            {description}
+          </p>
+        </div>
 
         <div className="pb-6 mb-6  border-b-[1px] border-b-solid  border-b-black/10">
-          <span className="block text-black/60">Select Colors</span>
+          <span className="block text-black/60">Select Color</span>
           <ul className="flex gap-x-4 bg-gray-300 max-w-fit p-2 rounded-lg">
             {colors.map(value => (
               <li key={value}>
                 <Button
                   variant={ButtonVariants.CLEAR}
-                  onClick={() => setColor(value)}
+                  onClick={() =>
+                    setProperties(prev => ({ ...prev, color: value }))
+                  }
                   className={`text-red-800 w-[37px] h-[37px] rounded-full relative `}
                   style={{ backgroundColor: value }}
                 >
-                  <span className={`opacity-${value === color ? '100' : 0}`}>
+                  <span
+                    className={`opacity-${
+                      value === properties.color ? '100' : 0
+                    }`}
+                  >
                     &#10003;
                   </span>
                 </Button>
@@ -98,11 +129,13 @@ export default function SingleProduct({
                 <li key={value}>
                   <Button
                     variant={ButtonVariants.CLEAR}
-                    onClick={() => setProductSize(value)}
+                    onClick={() =>
+                      setProperties(prev => ({ ...prev, size: value }))
+                    }
                     className={cn(
                       `py-3 px-6 rounded-[62px] text-center bg-[#F0F0F0] text-black transition-colors ease duration-300`,
                       {
-                        'bg-black text-white': productSize === value,
+                        'bg-black text-white': properties.size === value,
                       }
                     )}
                     style={{ backgroundColor: value }}
@@ -117,20 +150,35 @@ export default function SingleProduct({
           <div className="max-w-[170px] min-w-[110px] w-full px-5 py-4 flex justify-between items-center bg-[#F0F0F0] rounded-full font-bold text-3xl">
             <Button
               variant={ButtonVariants.CLEAR}
-              onClick={() => setCount(prev => (prev > 1 ? prev - 1 : prev))}
+              onClick={() =>
+                setProperties(prev => ({
+                  ...prev,
+                  count: prev.count > 0 ? prev.count - 1 : prev.count,
+                }))
+              }
             >
               -
             </Button>
-            <span>{count}</span>
+            <span>{properties.count}</span>
             <Button
               variant={ButtonVariants.CLEAR}
-              onClick={() => setCount(prev => prev + 1)}
+              onClick={() =>
+                setProperties(prev => ({
+                  ...prev,
+                  count: prev.count + 1,
+                }))
+              }
             >
               +
             </Button>
           </div>
-          <Button className="max-w-full" variant={ButtonVariants.PRIMARY}>
-            Add to cart
+          <Button
+            disabled={isLoading}
+            onClick={addBasketProduct}
+            className="max-w-full disabled:bg-black/50"
+            variant={ButtonVariants.PRIMARY}
+          >
+            {isLoading ? 'Loading...' : 'Add to cart'}
           </Button>
         </div>
       </div>

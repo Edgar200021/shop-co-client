@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { IProduct, IProductRequest } from './types'
-//import type { Pokemon } from './types'
 
-// Define a service using a base URL and expected endpoints
 export const productApi = createApi({
   reducerPath: 'products',
   tagTypes: ['Products'],
@@ -56,7 +54,7 @@ export const productApi = createApi({
       }),
       invalidatesTags: ['Products'],
     }),
-    deleteProduct: builder.mutation<string, number>({
+    deleteProduct: builder.mutation<{msg: string}, number>({
       query: id => ({
         url: `/${id}`,
         method: 'DELETE',

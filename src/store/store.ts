@@ -5,6 +5,7 @@ import { userApi } from './user/api'
 import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux'
 import { addressApi } from './address/api'
 import { reviewApi } from './review/api'
+import { basketApi } from './basket/api'
 //import { userReducer } from './user/slice'
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [addressApi.reducerPath]: addressApi.reducer,
     [reviewApi.reducerPath]: reviewApi.reducer,
+    [basketApi.reducerPath]: basketApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -21,7 +23,8 @@ export const store = configureStore({
       authApi.middleware,
       userApi.middleware,
       addressApi.middleware,
-      reviewApi.middleware
+      reviewApi.middleware,
+      basketApi.middleware
     ),
 })
 
