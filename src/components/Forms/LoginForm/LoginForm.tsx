@@ -4,10 +4,8 @@ import Button, { ButtonVariants } from '../../ui/Button/Button'
 import Input, { InputVariants } from '../../ui/Input/Input'
 import { cn } from '../../../utils/cn'
 import { RegisterSchema } from '../../../schemas/register-schema'
-import { authApi } from '../../../store/auth/api'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import { userApi } from '../../../store/user/api'
 
 interface Props {
   className?: string
@@ -17,30 +15,17 @@ export default function LoginForm({ className }: Props) {
   const { handleSubmit, control, reset } =
     useForm<Pick<RegisterSchema, 'email' | 'password'>>()
 
-  const [login, { isLoading }] = authApi.useLoginMutation()
-  const [trigger] = userApi.useLazyShowMeQuery()
-
   const navigate = useNavigate()
 
   const onSubmit: SubmitHandler<
     Pick<RegisterSchema, 'email' | 'password'>
-  > = async data => {
-    await login(data)
-      .unwrap()
-      .then(() => {
-        reset()
-        trigger('')
-        navigate('/user/account/orders')
-      })
-      .catch(err => toast.error(err.data.msg, { duration: 6000 }))
-  }
-
+  > = async data => {}
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={cn('w-form mx-auto', className)}
     >
-      <fieldset disabled={isLoading} className="border-none bg-none m-0 p-0">
+      <fieldset className="border-none bg-none m-0 p-0">
         <h1 className="text-center text-5xl font-bold mb-10">Sign in</h1>
         <Controller
           control={control}
@@ -83,9 +68,10 @@ export default function LoginForm({ className }: Props) {
           Doesn't have an account ?
         </Button>
 
-        <Button variant={ButtonVariants.PRIMARY} className="max-w-full">
-          {isLoading ? 'Loading...' : 'Login'}
-        </Button>
+        <Button
+          variant={ButtonVariants.PRIMARY}
+          className="max-w-full"
+        ></Button>
       </fieldset>
     </form>
   )

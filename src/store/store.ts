@@ -1,31 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { productApi } from './products/api'
-import { authApi } from './auth/api'
-import { userApi } from './user/api'
 import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux'
-import { addressApi } from './address/api'
-import { reviewApi } from './review/api'
-import { basketApi } from './basket/api'
-//import { userReducer } from './user/slice'
+import { apiSlice } from './appApi'
 
 export const store = configureStore({
   reducer: {
-    [productApi.reducerPath]: productApi.reducer,
-    [authApi.reducerPath]: authApi.reducer,
-    [userApi.reducerPath]: userApi.reducer,
-    [addressApi.reducerPath]: addressApi.reducer,
-    [reviewApi.reducerPath]: reviewApi.reducer,
-    [basketApi.reducerPath]: basketApi.reducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(
-      productApi.middleware,
-      authApi.middleware,
-      userApi.middleware,
-      addressApi.middleware,
-      reviewApi.middleware,
-      basketApi.middleware
-    ),
+    getDefaultMiddleware().concat(apiSlice.middleware),
 })
 
 type RootState = ReturnType<typeof store.getState>

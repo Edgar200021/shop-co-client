@@ -1,11 +1,9 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import Input, { InputVariants } from '../ui/Input/Input'
 import Logo from '../ui/Logo/Logo'
 import Navbar from '../Navbar/Navbar'
-import { userApi } from '../../store/user/api'
 import Button, { ButtonVariants } from '../ui/Button/Button'
-import { authApi } from '../../store/auth/api'
 import PageLoader from '../ui/PageLoader/PageLoader'
 
 import basket from '../../assets/icons/basket.svg'
@@ -17,18 +15,7 @@ interface Props {
 }
 
 export default function Header({ className }: Props) {
-  const { data } = userApi.useShowMeQuery('')
-  const [logout, { isLoading: isLogoutLoading }] = authApi.useLogoutMutation()
   const navigate = useNavigate()
-
-  if (isLogoutLoading) {
-    return <PageLoader />
-  }
-
-  function handleLogout() {
-    logout({})
-    navigate('/auth/login')
-  }
 
   return (
     <header className={className}>
@@ -51,15 +38,6 @@ export default function Header({ className }: Props) {
           >
             <img src={user} alt="User" />
           </Button>
-          {data?.user && (
-            <Button
-              variant={ButtonVariants.CLEAR}
-              className=" w-6 h-6 hover:-translate-y-1"
-              onClick={handleLogout}
-            >
-              <img src={logoutIcon} alt="Logout" />
-            </Button>
-          )}
         </div>
       </div>
     </header>

@@ -2,23 +2,12 @@ import { Outlet } from 'react-router-dom'
 import AccountSidebar from '../components/AccountSidebar/AccountSidebar'
 import { cn } from '../utils/cn'
 import PageLoader from '../components/ui/PageLoader/PageLoader'
-import { userApi } from '../store/user/api'
 
 interface Props {
   className?: string
 }
 
 export default function AccountLayout({ className }: Props) {
-  const { data, isLoading } = userApi.useShowMeQuery('')
-
-  if (isLoading) {
-    return <PageLoader />
-  }
-
-  if (!data) {
-    return null
-  }
-
   return (
     <div
       className={cn(
@@ -26,7 +15,9 @@ export default function AccountLayout({ className }: Props) {
         className
       )}
     >
-      <AccountSidebar user={data.user} />
+      <AccountSidebar
+        user={{ userId: 23232, role: 'admin', name: 'Edgar', email: 'edgarat' }}
+      />
       <main className="grow">
         <Outlet />
       </main>

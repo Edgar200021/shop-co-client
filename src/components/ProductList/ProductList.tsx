@@ -1,4 +1,5 @@
-import { productApi } from '../../store/products/api'
+import toast from 'react-hot-toast'
+import { useGetProductsQuery } from '../../store/products/productsApi'
 import { cn } from '../../utils/cn'
 import Product from '../Product/Product'
 
@@ -8,21 +9,12 @@ interface Props {
 }
 
 export default function ProductList({ className, limit }: Props) {
-  const { data, isLoading, isError } = productApi.useGetProductsQuery({
-    limit,
-  })
+  const { data, isLoading, error } = useGetProductsQuery(null)
 
-  if (isLoading) {
-    return <h1 className="text-5xl font-bold"> Loading...</h1>
+  if (error) {
+    console.log(error)
   }
-
-  if (isError) {
-    return <h1 className="text-5xl font-bold">Failed to fetch products</h1>
-  }
-
-  if (data && !data.products.length) {
-    return <h1 className="text-5xl font-bold">There are no product</h1>
-  }
+  console.log(data)
 
   return (
     <ul
@@ -31,7 +23,7 @@ export default function ProductList({ className, limit }: Props) {
         className
       )}
     >
-      {data?.products.map(product => (
+      {data?.data?.products.map(product => (
         <Product key={product.id} {...product} />
       ))}
     </ul>

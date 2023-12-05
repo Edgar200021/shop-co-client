@@ -6,7 +6,6 @@ import Button, { ButtonVariants } from '../components/ui/Button/Button'
 
 import 'leaflet/dist/leaflet.css'
 import AddAddress from '../components/Forms/AddAddress/AddAddress'
-import { addressApi } from '../store/address/api'
 import Address from '../components/Address/Address'
 
 interface Props {
@@ -14,8 +13,6 @@ interface Props {
 }
 
 export default function AccountAddressPage({ className }: Props) {
-  const { data, isLoading } = addressApi.useGetAddressesQuery({ limit: 5 })
-
   return (
     <div className={className}>
       <div className="flex items-center justify-between gap-5 mb-6">
@@ -41,19 +38,7 @@ export default function AccountAddressPage({ className }: Props) {
           </>
         </Modal>
       </div>
-      <section>
-        {isLoading && <h1>Loading...</h1>}
-
-        {data && !data.count ? (
-          <Empty type="address" />
-        ) : (
-          <ul className="space-y-4">
-            {data?.addresses.map(address => (
-              <Address key={address.id} {...address} />
-            ))}
-          </ul>
-        )}
-      </section>
+      <section></section>
     </div>
   )
 }

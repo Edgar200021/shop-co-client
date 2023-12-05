@@ -1,19 +1,47 @@
+import { IBaseFilter } from '../../types/types'
+
+export enum ProductSize {
+  XX_SMALL = 'XX-Small',
+  X_SMALL = 'X-Small',
+  SMALL = 'Small',
+  MEDIUM = 'Medium',
+  LARGE = 'Large',
+  X_LARGE = 'X-Large',
+  XX_LARGE = 'XX-Large',
+  '3X_LARGE' = '3X-Large',
+  '4x_LARGE' = '4X-Large',
+}
+
 export interface IProduct {
-  id: number
+  id: string
+  title: string
   image: string
   description: string
   discount: number
   price: number
-  title: string
-  discounted_price: number
-  rating: number
-  category: string
-  size: string
-  colors: string[]
-  category_id?: number
+  priceDiscount: number
+  avgRating: number
+  size: ProductSize[]
+  color: string[]
+  category: 't-shirt' | 'shorts' | 'shirts' | 'hoodie' | 'jeans'
 }
 
 export interface IProductRequest
   extends Omit<IProduct, 'id' | 'category' | 'rating' | 'discounted_price'> {
   category_id: number
+}
+
+export interface IProductFilter extends IBaseFilter {
+  category: 't-shirt' | 'shorts' | 'shirts' | 'hoodie' | 'jeans'
+  price: number
+  color: string
+  size: ProductSize
+}
+
+export interface IProductsResponse {
+  products: IProduct[]
+}
+
+export interface IProductResponse {
+  product: IProduct
 }

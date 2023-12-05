@@ -30,7 +30,7 @@ export default function AccountSidebar({ className, user }: Props) {
           <li>
             <Button
               to="/user/account/orders"
-              className="hover:bg-orange-600 duration-300 transition-colors ease aria-[current=page]:bg-orange-600"
+              className="hover:bg-orange-600 hover:text-white duration-300 transition-colors ease aria-[current=page]:bg-orange-600  aria-[current=page]:text-white"
               variant={ButtonVariants.PRIMARY}
             >
               <img width={48} height={48} src={ordersIcon} alt="Orders" />
@@ -40,7 +40,7 @@ export default function AccountSidebar({ className, user }: Props) {
           <li>
             <Button
               to="/user/account/favorite"
-              className="hover:bg-orange-600 duration-300 transition-colors ease whitespace-nowrap aria-[current=page]:bg-orange-600"
+              className="hover:bg-orange-600 hover:text-white duration-300 transition-colors ease whitespace-nowrap aria-[current=page]:bg-orange-600 aria-[current=page]:text-white"
               variant={ButtonVariants.PRIMARY}
             >
               <img width={48} height={48} src={hearthIcon} alt="Hearth" />
@@ -50,7 +50,7 @@ export default function AccountSidebar({ className, user }: Props) {
           <li>
             <Button
               to="/user/account/addresses"
-              className="hover:bg-orange-600 duration-300 transition-colors ease aria-[current=page]:bg-orange-600"
+              className="hover:bg-orange-600  hover:text-white duration-300 transition-colors ease aria-[current=page]:bg-orange-600  aria-[current=page]:text-white"
               variant={ButtonVariants.PRIMARY}
             >
               <img width={48} height={48} src={locationIcon} alt="Location" />
@@ -60,7 +60,7 @@ export default function AccountSidebar({ className, user }: Props) {
           <li>
             <Button
               variant={ButtonVariants.PRIMARY}
-              className="hover:bg-orange-600 duration-300 transition-colors ease aria-[current=page]:bg-orange-600"
+              className="hover:bg-orange-600 hover:text-white duration-300 transition-colors ease aria-[current=page]:bg-orange-600  aria-[current=page]:text-white"
             >
               <img width={48} height={48} src={sunIcon} alt="Sun" />
               <span> Тема сайта</span>
@@ -77,7 +77,7 @@ export default function AccountSidebar({ className, user }: Props) {
             {user?.name.slice(0, 1)}
           </span>
           <div>
-            <span className="flex justify-between items-center mb-1">
+            <span className="flex justify-between items-center mb-1 gap-2">
               {user?.name}
               <Modal>
                 <>
@@ -88,7 +88,7 @@ export default function AccountSidebar({ className, user }: Props) {
                         variant={ButtonVariants.CLEAR}
                         className="rounded-md w-6 h-6 inline-flex items-center justify-center bg-gray-100 hover:-translate-y-1 transition-transform duration-300 ease hover:bg-orange-600"
                       >
-                        <img src={pencil} alt="pencil" width={14} height={14}/>
+                        <img src={pencil} alt="pencil" width={14} height={14} />
                       </Button>
                     )}
                   />

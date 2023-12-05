@@ -1,28 +1,17 @@
 import toast from 'react-hot-toast'
 import BasketProduct from '../components/BasketProduct/BasketProduct'
 import PageLoader from '../components/ui/PageLoader/PageLoader'
-import { productApi } from '../store/products/api'
 
 interface Props {
   className?: string
 }
 
 export default function AdminProductsPage({ className }: Props) {
-  const { data, isLoading, isError } = productApi.useGetProductsQuery({})
-  const [
-    deleteProduct,
-    { isLoading: isDeleteLoading},
-  ] = productApi.useDeleteProductMutation()
-
-  if (isLoading && isDeleteLoading) {
-    return <PageLoader />
-  }
-
   return (
     <main className={className}>
       <section>
         <ul className="py-5 px-6 rounded-3xl border-[1px] border-black/10 divide-y-[1px] divide-black/10 max-w-3xl">
-          {data?.products.map(product => (
+          {/*{data?.products.map(product => (
             <BasketProduct
               className="max-w-2xl py-6"
               key={product.id}
@@ -49,7 +38,7 @@ export default function AdminProductsPage({ className }: Props) {
                 <BasketProduct.Update />
               </div>
             </BasketProduct>
-          ))}
+          ))}*/}
         </ul>
       </section>
     </main>

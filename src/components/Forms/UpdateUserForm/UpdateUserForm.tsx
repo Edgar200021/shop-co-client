@@ -8,7 +8,6 @@ import {
   UpdateUserSchema,
   updateUserSchema,
 } from '../../../schemas/updateUser-schema'
-import { userApi } from '../../../store/user/api'
 import toast from 'react-hot-toast'
 import { IUserResponse } from '../../../store/auth/types'
 
@@ -28,33 +27,11 @@ export default function UpdateUserForm({ className, user, close }: Props) {
     defaultValues: { name: user.name, email: user.email },
   })
 
-  const [updateUser, { isLoading }] = userApi.useUpdateUserMutation()
-
-  const onSubmit: SubmitHandler<UpdateUserSchema> = data => {
-    console.log(data)
-
-    if (data.email === user.email && data.name === user.name) {
-      toast.error('Please provide new email or name', { duration: 3000 })
-      return
-    }
-
-    updateUser(data)
-      .unwrap()
-      .then(() => {
-        toast.success('Success', { duration: 5000 })
-        close()
-      })
-      .catch(err => toast.error(err.data.msg, { duration: 5000 }))
-  }
-
   console.log(errors)
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className={cn('p-6 max-w-[480px] w-full', className)}
-    >
-      <fieldset disabled={isLoading} className="p-0 m-0 border-0 relative ">
+    <form className={cn('p-6 max-w-[480px] w-full', className)}>
+      <fieldset className="p-0 m-0 border-0 relative ">
         <span className="block font-bold text-[32px] mb-1 ">Personal data</span>
         <label className="mb-4">
           <span className="block text-sm text-[#9E9E9E] mb-1">name</span>
@@ -87,12 +64,9 @@ export default function UpdateUserForm({ className, user, close }: Props) {
           />
         </label>
         <Button
-          disabled={isLoading}
           variant={ButtonVariants.PRIMARY}
           className="rounded-lg bg-green-500 mt-5 text-white max-w-full mb-3 disabled:cursor-not-allowed disabled:bg-green-300"
-        >
-          {isLoading ? 'Loading...' : 'Save changes'}
-        </Button>
+        ></Button>
         <Button
           variant={ButtonVariants.PRIMARY}
           className="rounded-lg bg-[#F5F5F7] text-green-500 max-w-full"

@@ -5,12 +5,12 @@ import ProductStars from '../Stars/Stars'
 
 interface Props {
   className?: string
-  id: number
+  id: string
   image: string
   title: string
-  rating: number
+  avgRating: number
   price: number
-  discounted_price: number
+  priceDiscount: number
   discount: number
 }
 
@@ -19,9 +19,9 @@ export default function Product({
   id,
   image,
   title,
-  rating = 0,
+  avgRating,
   price,
-  discounted_price,
+  priceDiscount,
   discount,
 }: Props) {
   return (
@@ -37,15 +37,15 @@ export default function Product({
       </div>
       <span className="block font-bold text-xl  mb-2">{title}</span>
       <div className="flex items-center gap-2 mb-2">
-        <ProductStars averageRating={rating} />
-        <span>{rating}/5</span>
+        <ProductStars averageRating={avgRating} />
+        <span>{avgRating}/5</span>
       </div>
       <div className="flex gap-3">
-        {discounted_price === price ? (
+        {priceDiscount === price ? (
           <span className="font-bold text-2xl "> {price}$</span>
         ) : (
           <>
-            <span className="font-bold text-2xl "> {discounted_price}$</span>
+            <span className="font-bold text-2xl "> {priceDiscount}$</span>
             <span className="font-bold text-2xl line-through text-black/40 ">
               {price}$
             </span>

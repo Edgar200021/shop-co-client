@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { reviewApi } from '../../store/review/api'
 import { cn } from '../../utils/cn'
 import toast from 'react-hot-toast'
 import { SortReview } from '../../store/review/types'
@@ -15,42 +14,11 @@ interface Props {
 }
 
 export default function Reviews({ className, productId }: Props) {
-  const [sortQuery, setSortQuery] = useState<SortReview>(SortReview.DATE_DESC)
-
-  const { data, isLoading, isError, error } = reviewApi.useGetAllReviewsQuery(
-    {
-      productId,
-      sort: sortQuery,
-    },
-    { pollingInterval: 60000 }
-  )
-
-  useEffect(() => {
-    if (isError) {
-      toast.error(error.data.msg, { duration: 5000 })
-    }
-  }, [isError, error])
-
-  if (isLoading) {
-    return <h1 className="text-3xl font-bold">Loading...</h1>
-  }
-
-  console.log(data?.reviews)
-
   return (
     <div className={cn('max-w-7xl mx-auto px-clamp', className)}>
       <div className="flex items-center justify-between mb-[60px]">
-        <span className="text-2xl font-bold">
-          All reviews ({data?.reviews.length})
-        </span>
+        <span className="text-2xl font-bold"></span>
         <div className="flex gap-x-5 items-center">
-          <select onChange={e => setSortQuery(e.target.value as SortReview)}>
-            {SORT.map(sort => (
-              <option key={sort.value} value={sort.value}>
-                {sort.text}
-              </option>
-            ))}
-          </select>
           <Modal>
             <>
               <Modal.Open
@@ -73,11 +41,7 @@ export default function Reviews({ className, productId }: Props) {
           </Modal>
         </div>
       </div>
-      <ul className="grid grid-cols-review-list gap-5">
-        {data?.reviews.map(review => (
-          <Review {...review} />
-        ))}
-      </ul>
+      <ul className="grid grid-cols-review-list gap-5"></ul>
     </div>
   )
 }
