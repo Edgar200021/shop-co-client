@@ -7,17 +7,16 @@ import deleteIcon from '../../assets/icons/delete.svg'
 import updateIcon from '../../assets/icons/pencil.svg'
 import Modal from '../Modal/Modal'
 import ProductForm from '../Forms/ProductForm/ProductForm'
-import { productApi } from '../../store/products/api'
 import PageLoader from '../ui/PageLoader/PageLoader'
-import { basketApi } from '../../store/basket/api'
+import { useUpdateBasketQuantityMutation } from '../../store/basket/basketApi'
 
 interface Props {
   className?: string
-  id: number
+  id: string
   image: string
   title: string
   size: string[] | string
-  colors: string[] | string
+  color: string[] | string
   price: number
   quantity?: number
   children: ReactNode
@@ -35,13 +34,15 @@ export default function BasketProduct({
   title,
   price,
   size,
-  colors,
+  color,
   quantity,
   children,
 }: Props) {
+  console.log(color)
+  console.log(size)
   return (
     <BasketProductContext.Provider
-      value={{ image, title, price, quantity, size, colors, id }}
+      value={{ image, title, price, quantity, size, color, id }}
     >
       <li className={cn('flex gap-4 ', className)}>{children}</li>
     </BasketProductContext.Provider>
@@ -52,7 +53,7 @@ function BasketProductImage() {
   const { title, image } = useContext(BasketProductContext)!
 
   return (
-    <div className="rounded-md max-w-[125px] min-w-[100px] w-full max-h-[190px] min-h-[150px] flex items-center justiyf-center">
+    <div className="rounded-md max-w-[120px] min-w-[100px] w-full max-h-[130px] min-h-[100px] flex items-center justiyf-center">
       <img className="rounded-md" src={image} alt={title} />
     </div>
   )
@@ -69,20 +70,9 @@ function BasketProductSize({ className }: { className?: string }) {
   return (
     <div className={cn('text-sm', className)}>
       <span className="mr-1">Size:</span>
-      <span className="text-black/60">{size.slice(1, size.length - 1)}</span>
-    </div>
-  )
-}
-function BasketProductColors({ className }: { className?: string }) {
-  const { colors } = useContext(BasketProductContext)!
-
-  console.log(typeof colors)
-  return (
-    <div className={cn('text-sm flex gap-1', className)}>
-      <span className="">Color:</span>
-      {Array.isArray(colors) ? (
+      {Array.isArray(size) ? (
         <ul className="flex gap-1">
-          {colors.map((val, i, arr) => (
+          {size.map((val, i, arr) => (
             <li key={val}>
               <span className="text-black/60 capitalize ">
                 {i === arr.length - 1 ? val : `${val},`}
@@ -91,7 +81,29 @@ function BasketProductColors({ className }: { className?: string }) {
           ))}
         </ul>
       ) : (
-        <span className="text-black/60 capitalize ">{colors}</span>
+        <span className="text-black/60">{size}</span>
+      )}
+    </div>
+  )
+}
+function BasketProductColors({ className }: { className?: string }) {
+  const { color } = useContext(BasketProductContext)!
+
+  return (
+    <div className={cn('text-sm flex gap-1', className)}>
+      <span className="">Color:</span>
+      {Array.isArray(color) ? (
+        <ul className="flex gap-1">
+          {color.map((val, i, arr) => (
+            <li key={val}>
+              <span className="text-black/60 capitalize ">
+                {i === arr.length - 1 ? val : `${val},`}
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <span className="text-black/60 capitalize ">{color}</span>
       )}
     </div>
   )
@@ -123,8 +135,6 @@ function BasketProductDelete({
 function BasketProductUpdate({ className }: { className?: string }) {
   const { id } = useContext(BasketProductContext)!
 
-  const [trigger, result] = productApi.useLazyGetProductQuery()
-
   return (
     <Modal>
       <>
@@ -133,7 +143,6 @@ function BasketProductUpdate({ className }: { className?: string }) {
             <Button
               onClick={() => {
                 open('updateProduct')
-                trigger(id)
               }}
               variant={ButtonVariants.CLEAR}
               className={cn('w-6 h-6', className)}
@@ -159,42 +168,41 @@ function BasketProductUpdate({ className }: { className?: string }) {
 }
 
 function BasketProductCount({ className }: { className?: string }) {
-  const [updateBasketProduct, { isLoading }] =
-    basketApi.useUpdateBasketProductMutation()
-
-  const { count, id } = useContext(BasketProductContext)!
+  const { quantity, id } = useContext(BasketProductContext)!
+  const [updateQuantity, { isLoading }] = useUpdateBasketQuantityMutation()
 
   function decrement() {
-    if (!count || count <= 1) return
-
-    updateBasketProduct({ id, count: count - 1 })
+    if (quantity && quantity > 1) {
+      updateQuantity({ id, quantity: quantity - 1 })
+    }
   }
-  function increment() {
-    if (!count) return
 
-    updateBasketProduct({ id, count: count + 1 })
+  function increment() {
+    updateQuantity({ id, quantity: quantity! + 1 })
   }
 
   return (
     <div
       className={cn(
-        'max-w-[126px] font-bold text-2xl min-w-[105px] w-full rounded-full bg-[#F0F0F0] px-5 py-[12px] flex items-center justify-between',
+        'max-w-[126px] font-bold text-2xl min-w-[105px] w-full rounded-full bg-[#F0F0F0] px-5 py-[4px] flex items-center justify-between',
         className,
-		{'bg-gray-50': isLoading}
+        { 'bg-gray-50': isLoading }
       )}
     >
       <Button
         disabled={isLoading}
         onClick={decrement}
         variant={ButtonVariants.CLEAR}
+        className={cn({ 'cursor-not-allowed': isLoading })}
       >
         -
       </Button>
-      <span>{count && count}</span>
+      <span>{quantity && quantity}</span>
       <Button
         disabled={isLoading}
         onClick={increment}
         variant={ButtonVariants.CLEAR}
+        className={cn({ 'cursor-not-allowed': isLoading })}
       >
         +
       </Button>

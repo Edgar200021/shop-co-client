@@ -1,8 +1,13 @@
+import { useCallback } from 'react'
 import toast from 'react-hot-toast'
 import BasketProduct from '../components/BasketProduct/BasketProduct'
 import PageLoader from '../components/ui/PageLoader/PageLoader'
 import Button, { ButtonVariants } from '../components/ui/Button/Button'
-import { useGetBasketProductsQuery } from '../store/basket/basketApi'
+import {
+  useDeleteBasketProductMutation,
+  useGetBasketProductsQuery,
+} from '../store/basket/basketApi'
+import { calculateDeliveryFee } from '../utils/calculateDeliveryFee'
 
 interface Props {
   className?: string
@@ -10,8 +15,10 @@ interface Props {
 
 export default function BasketPage({ className }: Props) {
   const { data, isLoading } = useGetBasketProductsQuery(null)
+  const [deleteBasketProduct, { isLoading: isDeleteLoading }] =
+    useDeleteBasketProductMutation()
 
-  if (isLoading) return <PageLoader />
+  if (isLoading || isDeleteLoading) return <PageLoader />
 
   return (
     <main className={className}>
@@ -29,11 +36,22 @@ export default function BasketPage({ className }: Props) {
             </div>
             <div className=" pb-5 border-b-[1px] border-b-black/10 border-solid">
               <dt>Delivery Fee</dt>
-              {/*<dd>{data?.deliveryFee || 0}$</dd>*/}
+              <dd>
+                {(data?.data &&
+                  calculateDeliveryFee(data.data.totalDiscountedPrice)) ||
+                  0}
+                $
+              </dd>
             </div>
             <div>
               <dt>Total</dt>
-              {/*<dd>{(data && data.discountedPrice - data.deliveryFee) || 0}$</dd>*/}
+              <dd>
+                {(data &&
+                  data.data.totalDiscountedPrice -
+                    calculateDeliveryFee(data.data.totalDiscountedPrice)) ||
+                  0}
+                $
+              </dd>
             </div>
           </dl>
           <Button
@@ -44,6 +62,40 @@ export default function BasketPage({ className }: Props) {
             Go to Checkout &rarr;
           </Button>
         </div>
+
+        {data?.data && (
+          <ul className="grow border-[1px] rounded-3xl  px-6 divide-y-[1px]">
+            {data?.data.basketProducts.map(basketProduct => (
+              <BasketProduct
+                key={basketProduct._id}
+                quantity={basketProduct.quantity}
+                size={basketProduct.size}
+                color={basketProduct.color}
+                id={basketProduct._id}
+                image={basketProduct.product.image}
+                title={basketProduct.product.title}
+                price={basketProduct.product.price}
+                className="py-8"
+              >
+                <div>
+                  <BasketProduct.Image />
+                </div>
+                <div className="flex flex-col py-3">
+                  <BasketProduct.Title />
+                  <BasketProduct.Colors />
+                  <BasketProduct.Size />
+                  <BasketProduct.Price className="mt-auto" />
+                </div>
+                <div className="ml-auto inline-flex flex-col justify-between items-end grow">
+                  <BasketProduct.Delete
+                    handleDelete={() => deleteBasketProduct(basketProduct._id)}
+                  />
+                  <BasketProduct.Count />
+                </div>
+              </BasketProduct>
+            ))}
+          </ul>
+        )}
       </div>
     </main>
   )

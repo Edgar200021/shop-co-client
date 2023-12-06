@@ -23,7 +23,7 @@ export interface IBasketProductResponse {
   totalQuantity: number
   totalPrice: number
   totalDiscountedPrice: number
-  items: {
+  basketProducts: {
     size: ProductSize
     color: string
     quantity: number

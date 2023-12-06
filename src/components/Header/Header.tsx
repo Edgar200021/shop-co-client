@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 
-import Input, { InputVariants } from '../ui/Input/Input'
 import Logo from '../ui/Logo/Logo'
 import Navbar from '../Navbar/Navbar'
 import Button, { ButtonVariants } from '../ui/Button/Button'
@@ -11,9 +10,9 @@ import userIcon from '../../assets/icons/user.svg'
 import logoutIcon from '../../assets/icons/logout.svg'
 import { useAppDispatch, useAppSelector } from '../../store/store'
 import { useLogoutMutation } from '../../store/auth/authApi'
-import { useEffect } from 'react'
 import { deleteUser } from '../../store/user/userSlice'
 import toast from 'react-hot-toast'
+import SearchProduct from '../SearchProduct/SearchProduct'
 
 interface Props {
   className?: string
@@ -45,7 +44,7 @@ export default function Header({ className }: Props) {
       <div className="max-w-7xl mx-auto px-clamp py-6 flex items-center justify-between gap-x-10">
         <Logo />
         <Navbar />
-        <Input variant={InputVariants.SEARCH} />
+        <SearchProduct />
         <div className="flex gap-x-[14px]  [&>a]:transition-transform [&>a]:duration-300 [&>a]:ease">
           <Button
             variant={ButtonVariants.CLEAR}

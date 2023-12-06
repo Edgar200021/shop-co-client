@@ -28,8 +28,37 @@ export const basketApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Basket'],
     }),
+    deleteBasketProduct: builder.mutation<
+      { status: 'string'; data: null },
+      string
+    >({
+      query: id => ({
+        url: `/basket/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Basket'],
+    }),
+
+    updateBasketQuantity: builder.mutation<
+      ISuccessResponse<Pick<IBasketProductResponse, 'basketProducts'>>,
+      { id: string; quantity: number }
+    >({
+      query: body => ({
+        url: `/basket/${body.id}`,
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: { quantity: body.quantity },
+      }),
+      invalidatesTags: ['Basket'],
+    }),
   }),
 })
 
-export const { useCreateBasketProductMutation, useGetBasketProductsQuery } =
-  basketApi
+export const {
+  useCreateBasketProductMutation,
+  useGetBasketProductsQuery,
+  useUpdateBasketQuantityMutation,
+  useDeleteBasketProductMutation,
+} = basketApi
