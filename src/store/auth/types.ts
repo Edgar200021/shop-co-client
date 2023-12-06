@@ -1,19 +1,18 @@
-export interface IUserResponse {
-  userId: string
+export interface IUser {
   name: string
+  id: string
   role: 'user' | 'admin'
   email: string
 }
+export interface ISignupResponse {
+  user: IUser
+}
 
-export interface IUserRequest {
+export interface ISignupRequest {
   name: string
   email: string
   password: string
-  confirmPassword: string
-}
-
-export interface IRegisterResponse {
-  msg: string
+  passwordConfirm: string
 }
 
 export interface IAccountVerificationRequest {

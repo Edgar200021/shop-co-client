@@ -3,6 +3,9 @@ import { cn } from '../../utils/cn'
 import ProductStars from '../Stars/Stars'
 import Button, { ButtonVariants } from '../ui/Button/Button'
 import toast from 'react-hot-toast'
+import { useCreateBasketProductMutation } from '../../store/basket/basketApi'
+import { ProductSize } from '../../store/products/types'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
   className?: string
@@ -34,8 +37,30 @@ export default function SingleProduct({
   const [properties, setProperties] = useState({
     color: color[0],
     size: size[0],
-    count: 1,
+    quantity: 1,
   })
+  const [createBasketProduct, { isLoading }] = useCreateBasketProductMutation()
+  const navigate = useNavigate()
+
+  async function handleCreateBasketProduct() {
+    try {
+      const res = await createBasketProduct({
+        color: properties.color,
+        size: properties.size as ProductSize,
+        quantity: properties.quantity,
+        productId: id,
+      }).unwrap()
+
+      toast.success('Success ✅. Please check your basket')
+    } catch (error) {
+      console.log(error)
+      if ('data' in error && 'status' in error.data) {
+        toast.error('Unauthorized')
+        navigate('/auth/login')
+      }
+      if (error instanceof Error) toast.error(error.message)
+    }
+  }
 
   return (
     <div
@@ -128,19 +153,19 @@ export default function SingleProduct({
               onClick={() =>
                 setProperties(prev => ({
                   ...prev,
-                  count: prev.count > 1 ? prev.count - 1 : prev.count,
+                  count: prev.quantity > 1 ? prev.quantity - 1 : prev.quantity,
                 }))
               }
             >
               -
             </Button>
-            <span>{properties.count}</span>
+            <span>{properties.quantity}</span>
             <Button
               variant={ButtonVariants.CLEAR}
               onClick={() =>
                 setProperties(prev => ({
                   ...prev,
-                  count: prev.count + 1,
+                  quantity: prev.quantity + 1,
                 }))
               }
             >
@@ -148,10 +173,14 @@ export default function SingleProduct({
             </Button>
           </div>
           <Button
-            className="max-w-full disabled:bg-black/50"
+            onClick={handleCreateBasketProduct}
+            className={cn('max-w-full disabled:bg-black/50', {
+              'cursor-not-allowed': isLoading,
+            })}
             variant={ButtonVariants.PRIMARY}
+            disabled={isLoading}
           >
-            Add to Cart
+            {isLoading ? 'Loading...' : 'Add to Cart'}
           </Button>
         </div>
       </div>

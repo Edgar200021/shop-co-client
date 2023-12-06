@@ -1,14 +1,11 @@
-import { IProduct } from '../store/products/types'
-
 export interface ISuccessResponse<T> {
   status: 'success'
-
+  results?: number
   data: T
 }
 
 export interface IFailResponse {
   status: 'fail' | 'error'
-  results?: number
   message: string
 }
 

@@ -19,7 +19,7 @@ interface Props {
   size: string[] | string
   colors: string[] | string
   price: number
-  count?: number
+  quantity?: number
   children: ReactNode
 }
 
@@ -36,12 +36,12 @@ export default function BasketProduct({
   price,
   size,
   colors,
-  count,
+  quantity,
   children,
 }: Props) {
   return (
     <BasketProductContext.Provider
-      value={{ image, title, price, count, size, colors, id }}
+      value={{ image, title, price, quantity, size, colors, id }}
     >
       <li className={cn('flex gap-4 ', className)}>{children}</li>
     </BasketProductContext.Provider>

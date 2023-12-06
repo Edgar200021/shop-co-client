@@ -12,11 +12,13 @@ interface Props {
 
 export default function SingleProductPage({ className }: Props) {
   const { id } = useParams()
-  const { data, isLoading, error } = useGetProductQuery(id as string)
+  const { data, isLoading } = useGetProductQuery(id!)
 
   if (isLoading) {
     return <PageLoader />
   }
+
+  if (!data) return
 
   return (
     <main className={className}>

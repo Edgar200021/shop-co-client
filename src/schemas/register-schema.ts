@@ -17,11 +17,11 @@ export const registerSchema = z
       .refine(validator.isStrongPassword, {
         message: 'Create a more complex password',
       }),
-    confirmPassword: z.string(),
+    passwordConfirm: z.string(),
   })
-  .refine(data => data.confirmPassword === data.password, {
-    message: "Passwords dont't match",
-    path: ['confirmPassword'],
+  .refine(data => data.passwordConfirm === data.password, {
+    message: "Passwords don't match",
+    path: ['passwordConfirm'],
   })
 
 export type RegisterSchema = z.infer<typeof registerSchema>

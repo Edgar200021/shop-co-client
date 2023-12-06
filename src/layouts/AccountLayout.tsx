@@ -2,12 +2,15 @@ import { Outlet } from 'react-router-dom'
 import AccountSidebar from '../components/AccountSidebar/AccountSidebar'
 import { cn } from '../utils/cn'
 import PageLoader from '../components/ui/PageLoader/PageLoader'
+import { useAppSelector } from '../store/store'
 
 interface Props {
   className?: string
 }
 
 export default function AccountLayout({ className }: Props) {
+  const user = useAppSelector(state => state.user.user)
+
   return (
     <div
       className={cn(
@@ -15,9 +18,7 @@ export default function AccountLayout({ className }: Props) {
         className
       )}
     >
-      <AccountSidebar
-        user={{ userId: 23232, role: 'admin', name: 'Edgar', email: 'edgarat' }}
-      />
+      <AccountSidebar user={user} />
       <main className="grow">
         <Outlet />
       </main>

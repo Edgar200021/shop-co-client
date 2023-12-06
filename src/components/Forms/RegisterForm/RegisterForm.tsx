@@ -9,6 +9,8 @@ import {
   RegisterSchema,
   registerSchema,
 } from '../../../schemas/register-schema'
+import { useSignupMutation } from '../../../store/auth/authApi'
+import { useNavigate } from 'react-router-dom'
 interface Props {
   className?: string
 }
@@ -22,14 +24,28 @@ export default function RegisterForm({ className }: Props) {
   } = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
   })
+  const [signup, { isLoading }] = useSignupMutation()
+  const navigate = useNavigate()
+
+  const onSubmit: SubmitHandler<RegisterSchema> = async data => {
+    try {
+      await signup(data).unwrap()
+      reset({ email: '', name: '', password: '', passwordConfirm: '' })
+      toast.success('Success ✅', { duration: 3000 })
+      navigate('/auth/login')
+    } catch (error) {
+      if ('data' in error && 'message' in error.data)
+        toast.error(error.data.message as string)
+      if (error instanceof Error) toast.error(error.message)
+    }
+  }
 
   return (
     <form
       className={cn('w-form mx-auto', className)}
+      onSubmit={handleSubmit(onSubmit)}
     >
-      <fieldset
-        className="border-none background-none p-0 m-0  "
-      >
+      <fieldset className="border-none background-none p-0 m-0  ">
         <h1 className="text-center text-5xl font-bold mb-10">Create account</h1>
 
         <Controller
@@ -55,6 +71,7 @@ export default function RegisterForm({ className }: Props) {
               {...field}
               placeholder="email"
               className="mb-5"
+              type="email"
             />
           )}
         />
@@ -73,7 +90,7 @@ export default function RegisterForm({ className }: Props) {
         />
         {errors.password && errors.password.message}
         <Controller
-          name="confirmPassword"
+          name="passwordConfirm"
           control={control}
           render={({ field }) => (
             <Input
@@ -84,7 +101,7 @@ export default function RegisterForm({ className }: Props) {
             />
           )}
         />
-        {errors.confirmPassword && errors.confirmPassword.message}
+        {errors.passwordConfirm && errors.passwordConfirm.message}
 
         <Button
           to="/auth/login"
@@ -96,9 +113,9 @@ export default function RegisterForm({ className }: Props) {
 
         <Button
           variant={ButtonVariants.PRIMARY}
-        //  className={cn('max-w-full', { 'cursor-not-allowed': isLoading })}
+          className={cn('max-w-full', { 'cursor-not-allowed': isLoading })}
         >
-          {/*{isLoading ? 'Loading...' : 'Create account'}*/}
+          {isLoading ? 'Loading...' : 'Create account'}
         </Button>
       </fieldset>
     </form>

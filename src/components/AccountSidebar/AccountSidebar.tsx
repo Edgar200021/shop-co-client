@@ -30,7 +30,7 @@ export default function AccountSidebar({ className, user }: Props) {
           <li>
             <Button
               to="/user/account/orders"
-              className="hover:bg-orange-600 hover:text-white duration-300 transition-colors ease aria-[current=page]:bg-orange-600  aria-[current=page]:text-white"
+              className="hover:bg-black hover:text-white duration-300 transition-colors ease aria-[current=page]:bg-black  aria-[current=page]:text-white"
               variant={ButtonVariants.PRIMARY}
             >
               <img width={48} height={48} src={ordersIcon} alt="Orders" />
@@ -40,7 +40,7 @@ export default function AccountSidebar({ className, user }: Props) {
           <li>
             <Button
               to="/user/account/favorite"
-              className="hover:bg-orange-600 hover:text-white duration-300 transition-colors ease whitespace-nowrap aria-[current=page]:bg-orange-600 aria-[current=page]:text-white"
+              className="hover:bg-black hover:text-white duration-300 transition-colors ease whitespace-nowrap aria-[current=page]:b-black0 aria-[current=page]:text-white"
               variant={ButtonVariants.PRIMARY}
             >
               <img width={48} height={48} src={hearthIcon} alt="Hearth" />
@@ -50,7 +50,7 @@ export default function AccountSidebar({ className, user }: Props) {
           <li>
             <Button
               to="/user/account/addresses"
-              className="hover:bg-orange-600  hover:text-white duration-300 transition-colors ease aria-[current=page]:bg-orange-600  aria-[current=page]:text-white"
+              className="hover:bg-black  hover:text-white duration-300 transition-colors ease aria-[current=page]:bg-black  aria-[current=page]:text-white"
               variant={ButtonVariants.PRIMARY}
             >
               <img width={48} height={48} src={locationIcon} alt="Location" />
@@ -60,7 +60,7 @@ export default function AccountSidebar({ className, user }: Props) {
           <li>
             <Button
               variant={ButtonVariants.PRIMARY}
-              className="hover:bg-orange-600 hover:text-white duration-300 transition-colors ease aria-[current=page]:bg-orange-600  aria-[current=page]:text-white"
+              className="hover:bg-black hover:text-white duration-300 transition-colors ease aria-[current=page]:bg-black  aria-[current=page]:text-white"
             >
               <img width={48} height={48} src={sunIcon} alt="Sun" />
               <span> Тема сайта</span>

@@ -6,7 +6,6 @@ import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import VerifyAccount from './pages/VerifyAccount'
-import AccountPage from './pages/AccountMainPage'
 import AdminLayout from './layouts/AdminLayout'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import AdminProductsLayout from './layouts/AdminProductsLayout'
@@ -18,6 +17,8 @@ import AccountFavoritePage from './pages/AccountFavoritePage'
 import AccountAddressPage from './pages/AccountAddressPage'
 import SingleProductPage from './pages/SingleProductPage'
 import BasketPage from './pages/BasketPage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,18 @@ const router = createBrowserRouter([
         element: <MainPage />,
       },
       { path: 'auth/login', element: <LoginPage className="pt-20 pb-40" /> },
+      {
+        path: 'auth/register',
+        element: <RegisterPage className="pt-20 pb-40" />,
+      },
+      {
+        path: 'auth/forgot-password',
+        element: <ForgotPasswordPage className="pt-20 pb-40" />,
+      },
+      {
+        path: 'auth/reset-password/:token',
+        element: <ResetPasswordPage className="pt-20 pb-40" />,
+      },
       {
         path: 'auth/register',
         element: <RegisterPage className="pt-20 pb-40" />,
@@ -44,7 +57,7 @@ const router = createBrowserRouter([
         path: 'user/basket',
         element: (
           <ProtectedRoute roles={['admin', 'user']}>
-            <BasketPage className='pt-[70px] pb-[170px]' />
+            <BasketPage className="pt-[70px] pb-[170px]" />
           </ProtectedRoute>
         ),
       },
