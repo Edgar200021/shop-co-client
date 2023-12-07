@@ -26,10 +26,14 @@ export default function Product({
 }: Props) {
   return (
     <li
-      className={cn('max-w-[300px] min-w-[200px] w-full list-none ', className)}
+      className={cn('max-w-[300px] min-w-[200px] w-full list-none border-[1px] rounded-3xl p-4', className)}
     >
-      <div className="relative mb-4 bg-[#F0EEED] flex items-center justify-center max-h-[300px] min-h-[200px] h-full rounded-[20px] cursor-pointer">
-        <img className="rounded-[20px]" src={image} alt={title} />
+      <div className="relative mb-4 bg-white  flex items-center justify-center max-h-[300px] min-h-[200px] h-full rounded-[20px] cursor-pointer">
+        <img
+          className="rounded-[20px] h-full object-cover bg-transparent bg-white"
+          src={image}
+          alt={title}
+        />
         <Link
           to={`product/${id}`}
           className="absolute block w-full h-full top-0 left-0"
@@ -41,9 +45,7 @@ export default function Product({
         <span>{avgRating}/5</span>
       </div>
       <div className="flex gap-3">
-        {priceDiscount === price ? (
-          <span className="font-bold text-2xl "> {price}$</span>
-        ) : (
+        {discount ? (
           <>
             <span className="font-bold text-2xl "> {priceDiscount}$</span>
             <span className="font-bold text-2xl line-through text-black/40 ">
@@ -53,6 +55,8 @@ export default function Product({
               -{discount}%
             </span>
           </>
+        ) : (
+          <span className="font-bold text-2xl "> {price}$</span>
         )}
       </div>
     </li>

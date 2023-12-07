@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import { useCreateBasketProductMutation } from '../../store/basket/basketApi'
 import { ProductSize } from '../../store/products/types'
 import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../../store/store'
 
 interface Props {
   className?: string
@@ -39,12 +40,18 @@ export default function SingleProduct({
     size: size[0],
     quantity: 1,
   })
+  const user = useAppSelector(state => state.user.user)
   const [createBasketProduct, { isLoading }] = useCreateBasketProductMutation()
   const navigate = useNavigate()
 
   async function handleCreateBasketProduct() {
+    if (!user) {
+      toast.error('Unauthorized')
+      return navigate('/auth/login')
+    }
+
     try {
-      const res = await createBasketProduct({
+      await createBasketProduct({
         color: properties.color,
         size: properties.size as ProductSize,
         quantity: properties.quantity,
@@ -69,16 +76,14 @@ export default function SingleProduct({
         className
       )}
     >
-      <div className="max-w-md min-w-[350px] w-full max-h-[530px] min-h-[290px]  rounded-md inline-flex items-center justify-center bg-[#F0EEED] ">
+      <div className="max-w-md  border-[1px]  min-w-[350px] w-full max-h-[530px] min-h-[290px]  rounded-3xl inline-flex items-center justify-center white overflow-hidden ">
         <img src={image} alt={title} className="object-contain  h-full" />
       </div>
       <div className="grow">
         <h1 className="font-bold text-[40px] mb-4">{title}</h1>
         <ProductStars className="mb-4" averageRating={avgRating} />
         <div className="flex gap-3 mb-5">
-          {priceDiscount === price ? (
-            <span className="font-bold text-2xl "> {price}$</span>
-          ) : (
+          {discount ? (
             <>
               <span className="font-bold text-2xl "> {priceDiscount}$</span>
               <span className="font-bold text-2xl line-through text-black/40 ">
@@ -88,6 +93,8 @@ export default function SingleProduct({
                 -{discount}%
               </span>
             </>
+          ) : (
+            <span className="font-bold text-2xl "> {price}$</span>
           )}
         </div>
         <div className="border-b-[1px] border-b-solid  border-b-black/10 mb-6">

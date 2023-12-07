@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { cn } from '../../utils/cn'
 import Input, { InputVariants } from '../ui/Input/Input'
+import { useDebouncedValue } from '../../hooks/useDebouncedValue'
 
 interface Props {
   className?: string
@@ -8,6 +9,9 @@ interface Props {
 
 export default function SearchProduct({ className }: Props) {
   const [value, setValue] = useState('')
+  const debouncedValue = useDebouncedValue(value)
+
+  console.log(debouncedValue)
   return (
     <div className="max-w-[550px] w-full relative">
       <Input
