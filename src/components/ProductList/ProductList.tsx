@@ -6,17 +6,16 @@ import { IProductFilter } from '../../store/products/types'
 
 interface Props {
   className?: string
-  filter?: Partial<IProductFilter>
+  filter: Partial<IProductFilter> | null
 }
 
 export default function ProductList({ className, filter }: Props) {
-  const { data, isLoading, error } = useGetProductsQuery({ limit: 50 })
+  const { data, isLoading, error } = useGetProductsQuery(filter)
 
   if (error) {
     console.log(error)
   }
 
-  console.log(data)
 
   return (
     <ul

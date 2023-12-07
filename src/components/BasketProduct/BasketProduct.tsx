@@ -49,11 +49,16 @@ export default function BasketProduct({
   )
 }
 
-function BasketProductImage() {
+function BasketProductImage({ className }: { className?: string }) {
   const { title, image } = useContext(BasketProductContext)!
 
   return (
-    <div className="rounded-md max-w-[120px] min-w-[100px] w-full max-h-[130px] min-h-[100px] flex items-center justiyf-center">
+    <div
+      className={cn(
+        'rounded-md max-w-[120px] min-w-[100px] w-full max-h-[130px] min-h-[100px] flex items-center justiyf-center',
+        className
+      )}
+    >
       <img className="rounded-md" src={image} alt={title} />
     </div>
   )

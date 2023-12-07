@@ -34,8 +34,14 @@ export interface IProductRequest
 export interface IProductFilter extends IBaseFilter {
   category: 't-shirt' | 'shorts' | 'shirts' | 'hoodie' | 'jeans'
   price: number
+  'price[lt]':number
+  'price[gt]':number
+  'price[lte]':number
+  'price[gte]':number
   color: string
   size: ProductSize
+  title: string
+  'title[regex]': string
 }
 
 export interface IProductsResponse {

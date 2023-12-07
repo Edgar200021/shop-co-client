@@ -22,8 +22,14 @@ export const productApi = apiSlice.injectEndpoints({
           fields: filter?.fields,
           category: filter?.category,
           price: filter?.price,
+          'price[lt]': filter?.['price[lt]'],
+          'price[gt]': filter?.['price[gt]'],
+          'price[lte]': filter?.['price[lte]'],
+          'price[gte]': filter?.['price[gte]'],
           size: filter?.size,
           color: filter?.color,
+          title: filter?.title,
+          'title[regex]': filter?.['title[regex]'],
         },
       }),
     }),
@@ -36,4 +42,4 @@ export const productApi = apiSlice.injectEndpoints({
   }),
 })
 
-export const { useGetProductsQuery, useGetProductQuery } = productApi
+export const { useGetProductsQuery, useGetProductQuery, useLazyGetProductQuery } = productApi
