@@ -1,10 +1,10 @@
 import { ISuccessResponse } from '../../types/types'
 import { apiSlice } from '../appApi'
 import {
-  IProduct,
   IProductsResponse,
   IProductFilter,
   IProductResponse,
+  IProductFilterResponse,
 } from './types'
 
 export const productApi = apiSlice.injectEndpoints({
@@ -26,8 +26,8 @@ export const productApi = apiSlice.injectEndpoints({
           'price[gt]': filter?.['price[gt]'],
           'price[lte]': filter?.['price[lte]'],
           'price[gte]': filter?.['price[gte]'],
-          size: filter?.size,
-          color: filter?.color,
+          'size[elemMatch]': filter?.['size[elemMatch]'],
+          'color[elemMatch]': filter?.['color[elemMatch]'],
           title: filter?.title,
           'title[regex]': filter?.['title[regex]'],
         },
@@ -39,7 +39,21 @@ export const productApi = apiSlice.injectEndpoints({
         url: `/products/${id}`,
       }),
     }),
+
+    getProductFilters: builder.query<
+      ISuccessResponse<IProductFilterResponse>,
+      null
+    >({
+      query: () => ({
+        url: '/products/filters',
+      }),
+    }),
   }),
 })
 
-export const { useGetProductsQuery, useGetProductQuery, useLazyGetProductQuery } = productApi
+export const {
+  useGetProductsQuery,
+  useGetProductQuery,
+  useLazyGetProductQuery,
+  useGetProductFiltersQuery,
+} = productApi

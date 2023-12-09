@@ -19,6 +19,7 @@ import SingleProductPage from './pages/SingleProductPage'
 import BasketPage from './pages/BasketPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
+import Shop from './pages/Shop'
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: 'auth/verify-account',
         element: <VerifyAccount className="pt-20 mb-40" />,
+      },
+      {
+        path: '/shop',
+        element: <Shop  className='pt-6 mb-20'/>,
       },
       {
         path: 'product/:id',

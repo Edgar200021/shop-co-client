@@ -36,3 +36,20 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield; /* Firefox */
 }
+/*input[type='range'] {
+  accent-color: black;
+  cursor: pointer;
+}*/
+
+.slider div.bg-black.rounded-full-0 {
+  background-color: #f0f0f0;
+}
+.slider div.bg-black.rounded-full-2 {
+  background-color: #f0f0f0;
+}
+.slider div::after {
+  content: attr(data-price);
+}
+.slider div:last-child::after {
+  content: attr(data-price);
+}

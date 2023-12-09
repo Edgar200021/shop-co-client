@@ -40,17 +40,17 @@ export default function SearchProduct({ className }: Props) {
       />
       <div
         className={cn(
-          'grid grid-rows-[0fr] transition-all duration-500 ease overflow-hidden absolute  w-full z-50 bg-black rounded-3xl ',
+          'grid grid-rows-[0fr] transition-all duration-500 ease overflow-hidden absolute py-0  w-full z-50 bg-black rounded-3xl ',
           {
-            'grid-rows-[1fr]': !!value,
+            'grid-rows-[1fr] py-5': !!value,
           }
         )}
       >
-        <ul className="min-h-0 max-h-[370px] overflow-y-auto py-5 px-3 rounded-3xl space-y-5 border-[1px] border-black/10 divide-y-[1px] divide-black/10 max-w-3xl">
+        <ul className="min-h-0 max-h-[370px] overflow-y-auto px-3 rounded-3xl space-y-5 divide-y-[1px] divide-black/10 max-w-3xl">
           {data ? (
             data.data.products.map(product => (
-              <BasketProduct
-                className=" bg-white rounded-3xl cursor-pointer"
+              <BasketProduct key={product.id}
+                className=" bg-white  rounded-3xl cursor-pointer "
                 {...product}
               >
                 <div className="relative w-full flex justify-between items-center px-4">

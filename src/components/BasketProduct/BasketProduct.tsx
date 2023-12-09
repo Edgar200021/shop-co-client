@@ -38,8 +38,6 @@ export default function BasketProduct({
   quantity,
   children,
 }: Props) {
-  console.log(color)
-  console.log(size)
   return (
     <BasketProductContext.Provider
       value={{ image, title, price, quantity, size, color, id }}
