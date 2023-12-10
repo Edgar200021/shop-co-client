@@ -8,6 +8,8 @@ import { ProductSize } from '../../store/products/types'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../store/store'
 
+import checkIcon from '../../assets/icons/check.svg'
+
 interface Props {
   className?: string
   id: string
@@ -105,7 +107,7 @@ export default function SingleProduct({
 
         <div className="pb-6 mb-6  border-b-[1px] border-b-solid  border-b-black/10">
           <span className="block text-black/60">Select Color</span>
-          <ul className="flex gap-x-4 bg-gray-300 max-w-fit p-2 rounded-lg">
+          <ul className="flex gap-x-4 max-w-fit p-2 rounded-lg">
             {color.map(value => (
               <li key={value}>
                 <Button
@@ -113,16 +115,15 @@ export default function SingleProduct({
                   onClick={() =>
                     setProperties(prev => ({ ...prev, color: value }))
                   }
-                  className={`text-red-800 w-[37px] h-[37px] rounded-full relative `}
-                  style={{ backgroundColor: value }}
+                  className={`flex items-center justify-center w-[37px] h-[37px] rounded-full relative `}
+                  style={{ backgroundColor: value, border: '1px solid rgba(0, 0, 0, .2)' }}
                 >
-                  <span
-                    className={`opacity-${
+                  <img
+                    src={checkIcon}
+                    className={`w-4 h-4 opacity-${
                       value === properties.color ? '100' : 0
                     }`}
-                  >
-                    &#10003;
-                  </span>
+                  ></img>
                 </Button>
               </li>
             ))}
@@ -130,7 +131,7 @@ export default function SingleProduct({
         </div>
 
         <div className="pb-6 mb-6  border-b-[1px] border-b-solid  border-b-black/10">
-          <span className="block text-black/60">Choose Size</span>
+          <span className="block text-black/60 mb-2">Choose Size</span>
           <ul className="flex gap-x-4">
             {size.map(value => (
               <li key={value}>

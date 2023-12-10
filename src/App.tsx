@@ -19,7 +19,7 @@ import SingleProductPage from './pages/SingleProductPage'
 import BasketPage from './pages/BasketPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
-import Shop from './pages/Shop'
+import ShopPage from './pages/ShopPage'
 
 const router = createBrowserRouter([
   {
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/shop',
-        element: <Shop  className='pt-6 mb-20'/>,
+        element: <ShopPage className="pt-6 mb-20" />,
       },
       {
         path: 'product/:id',

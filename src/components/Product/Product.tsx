@@ -35,7 +35,7 @@ export default function Product({
           alt={title}
         />
         <Link
-          to={`product/${id}`}
+          to={`/product/${id}`}
           className="absolute block w-full h-full top-0 left-0"
         />
       </div>
