@@ -157,13 +157,13 @@ function BasketProductUpdate({ className }: { className?: string }) {
         <Modal.Window
           className="bg-white flex items-center justify-center"
           name="updateProduct"
-          renderContent={close => (
+          renderContent={() => (
             //result.isLoading || !result.data ? (
             //  <PageLoader />
             //) : (
             //  <ProductForm close={close} defaultValues={result.data.product} />
             //)
-            <h1>{close()}</h1>
+            <h1>{}</h1>
           )}
         />
       </>

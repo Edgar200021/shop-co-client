@@ -48,7 +48,7 @@ export default function AddAddress({ className, close, defaultValues }: Props) {
       } || {},
   })
 
-  const { lat, lng } = useUrlPosition()
+//  const { lat, lng } = useUrlPosition()
 
   return (
     <div className={cn('max-w-7xl mx-auto px-clamp py-10 ', className)}>
