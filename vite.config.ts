@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      //  '/api/v1': 'https://shop-co.onrender.com',
-      '/api/v1': 'http://localhost:4000',
+        '/api/v1': 'https://shop-co.onrender.com',
+    //  '/api/v1': 'http://localhost:4000',
     },
   },
 })
