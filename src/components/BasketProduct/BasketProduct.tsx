@@ -6,8 +6,8 @@ import Button, { ButtonVariants } from '../ui/Button/Button'
 import deleteIcon from '../../assets/icons/delete.svg'
 import updateIcon from '../../assets/icons/pencil.svg'
 import Modal from '../Modal/Modal'
-import ProductForm from '../Forms/ProductForm/ProductForm'
-import PageLoader from '../ui/PageLoader/PageLoader'
+//import ProductForm from '../Forms/ProductForm/ProductForm'
+//import PageLoader from '../ui/PageLoader/PageLoader'
 import { useUpdateBasketQuantityMutation } from '../../store/basket/basketApi'
 
 interface Props {
@@ -136,7 +136,7 @@ function BasketProductDelete({
   )
 }
 function BasketProductUpdate({ className }: { className?: string }) {
-  const { id } = useContext(BasketProductContext)!
+//  const { id } = useContext(BasketProductContext)!
 
   return (
     <Modal>
@@ -157,13 +157,14 @@ function BasketProductUpdate({ className }: { className?: string }) {
         <Modal.Window
           className="bg-white flex items-center justify-center"
           name="updateProduct"
-          renderContent={close =>
-            result.isLoading || !result.data ? (
-              <PageLoader />
-            ) : (
-              <ProductForm close={close} defaultValues={result.data.product} />
-            )
-          }
+          renderContent={close => (
+            //result.isLoading || !result.data ? (
+            //  <PageLoader />
+            //) : (
+            //  <ProductForm close={close} defaultValues={result.data.product} />
+            //)
+            <h1>{close()}</h1>
+          )}
         />
       </>
     </Modal>

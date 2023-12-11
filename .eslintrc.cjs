@@ -16,5 +16,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     '@typescript-eslint/ban-ts-comment': 'off',
+    'no-unused-wars': [0],
   },
 }
