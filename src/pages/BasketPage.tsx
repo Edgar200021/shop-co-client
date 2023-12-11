@@ -22,7 +22,40 @@ export default function BasketPage({ className }: Props) {
 
   return (
     <main className={className}>
-      <div className="max-w-7xl mx-auto px-clamp flex justify-between gap-8">
+      <div className="max-w-7xl mx-auto px-clamp flex justify-between gap-8 ">
+        {data?.data && (
+          <ul className="grow border-[1px] rounded-3xl  px-6 divide-y-[1px]">
+            {data?.data.basketProducts.map(basketProduct => (
+              <BasketProduct
+                key={basketProduct._id}
+                quantity={basketProduct.quantity}
+                size={basketProduct.size}
+                color={basketProduct.color}
+                id={basketProduct._id}
+                image={basketProduct.product.image}
+                title={basketProduct.product.title}
+                price={basketProduct.product.price}
+                className="py-8"
+              >
+                <div>
+                  <BasketProduct.Image />
+                </div>
+                <div className="flex flex-col py-3">
+                  <BasketProduct.Title />
+                  <BasketProduct.Colors />
+                  <BasketProduct.Size />
+                  <BasketProduct.Price className="mt-auto" />
+                </div>
+                <div className="ml-auto inline-flex flex-col justify-between items-end grow">
+                  <BasketProduct.Delete
+                    handleDelete={() => deleteBasketProduct(basketProduct._id)}
+                  />
+                  <BasketProduct.Count />
+                </div>
+              </BasketProduct>
+            ))}
+          </ul>
+        )}
         <div className="rounded-3xl py-5 px-6 border-[1px] border-black/10 grow max-w-[505px] min-w-[350px] ">
           <span className="block font-bold text-2xl mb-6">Order Summary</span>
           <dl className="[&>div]:flex [&>div]:items-center [&>div]:justify-between [&>div]:text-xl [&>div]:gap-x-4 [&>div>dt]:text-black/60 [&>div>dd]:font-bold  space-y-5 mb-20">
@@ -62,40 +95,6 @@ export default function BasketPage({ className }: Props) {
             Go to Checkout &rarr;
           </Button>
         </div>
-
-        {data?.data && (
-          <ul className="grow border-[1px] rounded-3xl  px-6 divide-y-[1px]">
-            {data?.data.basketProducts.map(basketProduct => (
-              <BasketProduct
-                key={basketProduct._id}
-                quantity={basketProduct.quantity}
-                size={basketProduct.size}
-                color={basketProduct.color}
-                id={basketProduct._id}
-                image={basketProduct.product.image}
-                title={basketProduct.product.title}
-                price={basketProduct.product.price}
-                className="py-8"
-              >
-                <div>
-                  <BasketProduct.Image />
-                </div>
-                <div className="flex flex-col py-3">
-                  <BasketProduct.Title />
-                  <BasketProduct.Colors />
-                  <BasketProduct.Size />
-                  <BasketProduct.Price className="mt-auto" />
-                </div>
-                <div className="ml-auto inline-flex flex-col justify-between items-end grow">
-                  <BasketProduct.Delete
-                    handleDelete={() => deleteBasketProduct(basketProduct._id)}
-                  />
-                  <BasketProduct.Count />
-                </div>
-              </BasketProduct>
-            ))}
-          </ul>
-        )}
       </div>
     </main>
   )

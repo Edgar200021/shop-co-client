@@ -4,6 +4,7 @@ import { cn } from '../../../utils/cn'
 import Button, { ButtonVariants } from '../../ui/Button/Button'
 import Input, { InputVariants } from '../../ui/Input/Input'
 import { FormEvent, useState } from 'react'
+import { errorHandlerAPI } from '../../../utils/errorHandler'
 
 interface Props {
   className?: string
@@ -20,14 +21,7 @@ export default function ForgotPasswordForm({ className }: Props) {
       toast.success('Success ✅. Please check your email')
       setEmail('')
     } catch (error) {
-      console.log(error)
-      if ('data' in error && 'status' in error.data)
-        toast.error(
-          error.data.status === 'fail'
-            ? `User with email ${email} doesn't exist`
-            : 'Something went wrong. Please try again later!'
-        )
-      if (error instanceof Error) toast.error(error.message)
+      errorHandlerAPI(error)
     }
   }
 

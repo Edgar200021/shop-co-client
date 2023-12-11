@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../store/store'
 
 import checkIcon from '../../assets/icons/check.svg'
+import { errorHandlerAPI } from '../../utils/errorHandler'
 
 interface Props {
   className?: string
@@ -62,12 +63,7 @@ export default function SingleProduct({
 
       toast.success('Success ✅. Please check your basket')
     } catch (error) {
-      console.log(error)
-      if ('data' in error && 'status' in error.data) {
-        toast.error('Unauthorized')
-        navigate('/auth/login')
-      }
-      if (error instanceof Error) toast.error(error.message)
+      errorHandlerAPI(error)
     }
   }
 
@@ -116,7 +112,10 @@ export default function SingleProduct({
                     setProperties(prev => ({ ...prev, color: value }))
                   }
                   className={`flex items-center justify-center w-[37px] h-[37px] rounded-full relative `}
-                  style={{ backgroundColor: value, border: '1px solid rgba(0, 0, 0, .2)' }}
+                  style={{
+                    backgroundColor: value,
+                    border: '1px solid rgba(0, 0, 0, .2)',
+                  }}
                 >
                   <img
                     src={checkIcon}

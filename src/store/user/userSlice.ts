@@ -1,13 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IUser } from '../auth/types'
 
-interface UserInitalState {
-  status: 'pending' | 'loading' | 'success' | 'fail'
+interface UserInitialState {
   user: IUser | null
 }
 
-const initialState: UserInitalState = {
-  status: 'pending',
+const initialState: UserInitialState = {
   user: null,
 }
 

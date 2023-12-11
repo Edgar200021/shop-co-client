@@ -59,7 +59,7 @@ const Window = ({ renderContent, className, name }: WindowProps) => {
   return createPortal(
     <div
       className={cn(
-        'absolute left-0 top-0 w-full h-full backdrop-blur-lg flex justify-center items-center ',
+        'fixed left-0 top-0 w-full h-full backdrop-blur-lg flex justify-center items-center ',
         className
       )}
     >

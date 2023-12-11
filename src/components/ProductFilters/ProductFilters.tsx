@@ -1,6 +1,6 @@
 import ReactSlider from 'react-slider'
 import { useSearchParams } from 'react-router-dom'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useLayoutEffect, useState } from 'react'
 
 import Button, { ButtonVariants } from '../ui/Button/Button'
 import PageLoader from '../ui/PageLoader/PageLoader'
@@ -21,14 +21,6 @@ interface Filter {
   color: string[]
 }
 
-interface SearchParams {
-  'price>=': string
-  'price<=': string
-  color: string[]
-  size: ProductSize[]
-  category: string
-}
-
 interface Props {
   className?: string
 }
@@ -42,17 +34,6 @@ export default function ProductFilters({ className }: Props) {
     size: [],
     color: [],
   })
-  console.log(data)
-
-  useEffect(() => {
-    const elements = Array.from(
-      document.querySelectorAll('.slider [role="slider"]')
-    )
-
-    elements.forEach((elem, i) => {
-      elem.setAttribute('data-price', `${filters.price[i]}$`)
-    })
-  }, [filters.price])
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setFilters(prev => {
@@ -75,28 +56,32 @@ export default function ProductFilters({ className }: Props) {
       return { ...prev, [e.target.name]: e.target.value }
     })
   }
-
   function handleSearchParams() {
-    const filterObj = Object.entries(filters).reduce<Partial<SearchParams>>(
-      (acc, [key, value]) => {
-        if (key === 'price') {
-          acc['price>='] = value[0]
-          acc['price<='] = value[1]
-        }
-        if ((key === 'color' || key === 'size') && !!value.length) {
-          acc[key] = value.join(',').replace(/#/g, '')
-        }
+    Object.entries(filters).forEach(([key, value]) => {
+      if (key === 'price') {
+        searchParams.set('price>=', value[0])
+        searchParams.set('price<=', value[1])
+      }
+      if ((key === 'color' || key === 'size') && !!value.length) {
+        searchParams.set(key, value.join(',').replace(/#/g, ''))
+      }
 
-        if (key === 'category' && value) {
-          acc['category'] = value
-        }
+      if (key === 'category' && value) {
+        searchParams.set('category', value)
+      }
+    }, {})
 
-        return acc
-      },
-      {}
+    setSearchParams(searchParams)
+  }
+  function handlePriceChange(value: [number, number]) {
+    setFilters(prev => ({ ...prev, price: value }))
+    const elements = Array.from(
+      document.querySelectorAll('.slider [role="slider"]')
     )
 
-    setSearchParams(filterObj)
+    elements.forEach((elem, i) => {
+      elem.setAttribute('data-price', `${filters.price[i]}$`)
+    })
   }
 
   if (isLoading || !data) return <PageLoader />
@@ -136,7 +121,12 @@ export default function ProductFilters({ className }: Props) {
             {data.data.categories.map(category => (
               <label
                 key={category}
-                className="capitalize cursor-pointer text-black/60 hover:scale-110 hover:text-black transition-all duration-300"
+                className={cn(
+                  'capitalize cursor-pointer text-black/60 hover:scale-110 hover:text-black transition-all duration-300',
+                  {
+                    'text-black': filters.category === category,
+                  }
+                )}
               >
                 <Input
                   type="radio"
@@ -162,7 +152,7 @@ export default function ProductFilters({ className }: Props) {
           thumbClassName=" rounded-full top-[-50%] w-6 h-6 bg-black  after:absolute after:block after:w-full after:h-4 after:left-[20%]  after:-bottom-6"
           value={filters.price}
           trackClassName="bg-black h-full rounded-full"
-          onChange={value => setFilters(prev => ({ ...prev, price: value }))}
+          onChange={handlePriceChange}
           minDistance={10}
         />
       </div>

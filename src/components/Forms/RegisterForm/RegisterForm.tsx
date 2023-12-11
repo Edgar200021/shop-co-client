@@ -11,6 +11,7 @@ import {
 } from '../../../schemas/register-schema'
 import { useSignupMutation } from '../../../store/auth/authApi'
 import { useNavigate } from 'react-router-dom'
+import { errorHandlerAPI } from '../../../utils/errorHandler'
 interface Props {
   className?: string
 }
@@ -34,9 +35,7 @@ export default function RegisterForm({ className }: Props) {
       toast.success('Success ✅', { duration: 3000 })
       navigate('/auth/login')
     } catch (error) {
-      if ('data' in error && 'message' in error.data)
-        toast.error(error.data.message as string)
-      if (error instanceof Error) toast.error(error.message)
+      errorHandlerAPI(error)
     }
   }
 
@@ -85,6 +84,7 @@ export default function RegisterForm({ className }: Props) {
               {...field}
               placeholder="Password"
               className="mb-5"
+              type="password"
             />
           )}
         />
@@ -98,6 +98,7 @@ export default function RegisterForm({ className }: Props) {
               {...field}
               placeholder="Confirm password"
               className="mb-2"
+              type="password"
             />
           )}
         />

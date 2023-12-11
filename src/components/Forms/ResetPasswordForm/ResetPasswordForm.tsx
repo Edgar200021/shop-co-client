@@ -10,6 +10,7 @@ import {
 } from '../../../schemas/register-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router-dom'
+import { errorHandlerAPI } from '../../../utils/errorHandler'
 
 interface Props {
   className?: string
@@ -36,8 +37,7 @@ export default function ResetPasswordForm({
       toast.success('Success ✅.')
       navigate('/auth/login')
     } catch (error) {
-      console.log(error)
-      if (error instanceof Error) toast.error(error.message)
+      errorHandlerAPI(error)
     }
   }
 

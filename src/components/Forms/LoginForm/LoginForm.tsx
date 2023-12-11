@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../store/store'
 import { useLoginMutation } from '../../../store/auth/authApi'
 import { addUser } from '../../../store/user/userSlice'
+import { errorHandlerAPI } from '../../../utils/errorHandler'
 
 interface Props {
   className?: string
@@ -32,10 +33,7 @@ export default function LoginForm({ className }: Props) {
       toast.success('Success ✅', { duration: 3000 })
       navigate('/user/account/orders')
     } catch (error) {
-      console.log(error)
-      if ('status' in error && error.status === 400)
-        toast.error('Emaill or password or not correct')
-      if (error instanceof Error) toast.error(error.message)
+		errorHandlerAPI(error)
     }
   }
   return (

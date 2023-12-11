@@ -27,8 +27,6 @@ export default function UpdateUserForm({ className, user, close }: Props) {
     defaultValues: { name: user.name, email: user.email },
   })
 
-  console.log(errors)
-
   return (
     <form className={cn('p-6 max-w-[480px] w-full', className)}>
       <fieldset className="p-0 m-0 border-0 relative ">

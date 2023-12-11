@@ -38,10 +38,13 @@ export default function ProductList({ className, filter }: Props) {
 
   console.log(Object.fromEntries(validFilterObj))
 
-  const { data, isLoading, error } = useGetProductsQuery({
-    ...filter,
-    ...(!!validFilterObj.size && Object.fromEntries(validFilterObj)),
-  })
+  const { data, isLoading, error } = useGetProductsQuery(
+    {
+      ...filter,
+      ...(!!validFilterObj.size && Object.fromEntries(validFilterObj)),
+    },
+    { pollingInterval: 1000 * 60 * 60 }
+  )
 
   if (error) {
     console.log(error)

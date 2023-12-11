@@ -15,12 +15,8 @@ export default function SearchProduct({ className }: Props) {
   const [value, setValue] = useState('')
   const productTitle = useDebounce<string>(value)
 
-  const filterObj = useMemo(() => {
-    return { 'title[regex]': productTitle }
-  }, [productTitle])
-
   const { data, isLoading, error } = useGetProductsQuery({
-    ...filterObj,
+    'title[regex]': productTitle,
     fields: 'image,title',
     limit: 100,
   })
@@ -49,7 +45,8 @@ export default function SearchProduct({ className }: Props) {
         <ul className="min-h-0 max-h-[370px] overflow-y-auto px-3 rounded-3xl space-y-5 divide-y-[1px] divide-black/10 max-w-3xl">
           {data ? (
             data.data.products.map(product => (
-              <BasketProduct key={product.id}
+              <BasketProduct
+                key={product.id}
                 className=" bg-white  rounded-3xl cursor-pointer "
                 {...product}
               >

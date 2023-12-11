@@ -55,7 +55,7 @@ const router = createBrowserRouter([
         element: <ShopPage className="pt-6 mb-20" />,
       },
       {
-        path: 'product/:id',
+        path: 'product/:productId',
         element: <SingleProductPage className="pt-20 pb-44" />,
       },
       {

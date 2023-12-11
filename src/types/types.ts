@@ -5,8 +5,7 @@ export interface ISuccessResponse<T> {
 }
 
 export interface IFailResponse {
-  status: 'fail' | 'error'
-  message: string
+  data: { status: 'fail' | 'error'; message: string }
 }
 
 export interface IBaseFilter {

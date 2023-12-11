@@ -11,8 +11,8 @@ interface Props {
 }
 
 export default function SingleProductPage({ className }: Props) {
-  const { id } = useParams()
-  const { data, isLoading } = useGetProductQuery(id!)
+  const { productId } = useParams()
+  const { data, isLoading } = useGetProductQuery(productId!)
 
   if (isLoading) {
     return <PageLoader />
@@ -24,7 +24,7 @@ export default function SingleProductPage({ className }: Props) {
   return (
     <main className={className}>
       <SingleProduct {...data?.data?.product} className="mb-40" />
-      <Reviews productId={Number(id)} />
+      <Reviews productId={productId!} />
     </main>
   )
 }

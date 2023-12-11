@@ -1,21 +1,29 @@
+import { IUser } from '../auth/types'
+
 export interface IReviewResponse {
-  id: number
+  id: string
   rating: number
-  text: string
-  created_at: string
-  username: string
+  review: string
+  user: Omit<IUser, 'role' | 'id'> & { _id: string }
+  createdAt: Date
 }
 
-export interface IRevewRequest {
+export interface IReviewsResponse {
+  reviews: IReviewResponse[]
+}
+
+export interface IReviewRequest {}
+export interface ICreateReview {
+  productId: string
   rating: number
-  text: string
+  review: string
 }
 
 export enum SortReview {
-  DATE_DESC = 'date-desc',
-  DATE_ASC = 'date-asc',
-  TEXT_DESC = 'text-desc',
-  TEXT_ASC = 'text-asc',
-  RATING_DESC = 'rating-desc',
-  RATING_ASC = 'rating-asc',
+  DATE_DESC = '-createdAt',
+  DATE_ASC = 'createdAt',
+  TEXT_DESC = '-review',
+  TEXT_ASC = 'review',
+  RATING_DESC = '-rating',
+  RATING_ASC = 'rating',
 }

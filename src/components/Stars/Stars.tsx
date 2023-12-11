@@ -29,9 +29,10 @@ export const ProductReviewStars = ({
   className,
   count = 5,
   onRating,
-}: Omit<Props, 'averageRating'>) => {
-  const [selectedRating, setSelectedRating] = useState(0)
-  const [rating, setRating] = useState(0)
+  defaultRating
+}: Omit<Props, 'averageRating'> & { defaultRating?: number }) => {
+  const [selectedRating, setSelectedRating] = useState(defaultRating || 0)
+  const [rating, setRating] = useState(defaultRating || 0)
 
   function handleRating(num: number) {
     setRating(num)
