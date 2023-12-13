@@ -1,6 +1,6 @@
 import ReactSlider from 'react-slider'
 import { useSearchParams } from 'react-router-dom'
-import { ChangeEvent, useEffect, useLayoutEffect, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 import Button, { ButtonVariants } from '../ui/Button/Button'
 import PageLoader from '../ui/PageLoader/PageLoader'
@@ -26,7 +26,9 @@ interface Props {
 }
 
 export default function ProductFilters({ className }: Props) {
-  const { data, isLoading } = useGetProductFiltersQuery(null)
+  const { data, isLoading } = useGetProductFiltersQuery(null, {
+    pollingInterval: 1000 * 60 * 60,
+  })
   const [searchParams, setSearchParams] = useSearchParams()
   const [filters, setFilters] = useState<Filter>({
     category: '',
@@ -190,13 +192,18 @@ export default function ProductFilters({ className }: Props) {
                   <Input
                     type="checkbox"
                     variant={InputVariants.PRIMARY}
-                    className="fixed opacity-0 pointer-events-none peer"
+                    className="fixed opacity-0 pointer-events-none"
                     name="color"
                     value={color}
                     onChange={handleInputChange}
                   />
                   <img
-                    className="w-4 h-4 absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0 transition-opacity duration-300 peer-checked:opacity-1 "
+                    className={cn(
+                      'w-4 h-4 absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0 transition-opacity duration-300  ',
+                      {
+                        'opacity-1': filters.color.includes(color),
+                      }
+                    )}
                     src={checkIcon}
                   />
                 </label>

@@ -11,7 +11,7 @@ export default function Shop({ className }: Props) {
     <main className={cn('', className)}>
       <div className="max-w-7xl mx-auto px-clamp flex justify-between gap-8 items-start">
         <ProductFilters />
-        <ProductList className='grow' filter={null} />
+        <ProductList showPagination={true} />
       </div>
     </main>
   )

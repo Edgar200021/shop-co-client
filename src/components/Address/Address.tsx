@@ -6,7 +6,6 @@ import locationIcon from '../../assets/icons/location.svg'
 import pencilIcon from '../../assets/icons/pencil.svg'
 import deleteIcon from '../../assets/icons/delete-address.svg'
 import Button, { ButtonVariants } from '../ui/Button/Button'
-import { addressApi } from '../../store/address/api'
 import Modal from '../Modal/Modal'
 import AddAddress from '../Forms/AddAddress/AddAddress'
 
@@ -23,19 +22,23 @@ export default function Address({
   floor,
   id,
 }: Props) {
-  const [deleteAddress, { isLoading: isDeleteLoading }] =
-    addressApi.useDeleteAddressMutation()
-
   function handleDelete() {
     deleteAddress(id)
   }
 
   return (
-    <li className={cn('p-4 rounded-lg flex items-center gap-x-4 bg-gray-100', className)}>
+    <li
+      className={cn(
+        'p-4 rounded-lg flex items-center gap-x-4 bg-gray-100',
+        className
+      )}
+    >
       <img src={locationIcon} alt="location" />
       <div>
         <span className="block text-base font-medium">{street}</span>
-        <span className="text-[#686870] text-sm mr-1">Entrance {entrance},</span>
+        <span className="text-[#686870] text-sm mr-1">
+          Entrance {entrance},
+        </span>
         <span className="text-[#686870] text-sm mr-1">Floor {floor},</span>
         <span className="text-[#686870] text-sm">Aparment {apartment}</span>
       </div>
@@ -47,7 +50,6 @@ export default function Address({
                 <Button
                   className="w-[30px] h-[30px] rounded-lg bg-gray-200 inline-flex items-center justify-center hover:-translate-y-1 duration-300 transform-translate ease"
                   variant={ButtonVariants.CLEAR}
-                  disabled={isDeleteLoading}
                   onClick={() => open('update-address')}
                 >
                   <img
@@ -80,7 +82,6 @@ export default function Address({
         <Button
           className="w-[30px] h-[30px] rounded-lg bg-gray-200 inline-flex items-center justify-center hover:-translate-y-1 duration-300 transform-translate ease"
           variant={ButtonVariants.CLEAR}
-          disabled={isDeleteLoading}
           onClick={handleDelete}
         >
           <img width={14} height={14} src={deleteIcon} alt="Delete Address" />

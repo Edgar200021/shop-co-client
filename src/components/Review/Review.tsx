@@ -1,4 +1,3 @@
-import { IUser } from '../../store/auth/types'
 import { useDeleteMyReviewMutation } from '../../store/review/reviewApi'
 import { IReviewResponse } from '../../store/review/types'
 import { useAppSelector } from '../../store/store'

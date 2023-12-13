@@ -32,6 +32,13 @@ export default function AddAddress({ className, close, defaultValues }: Props) {
   ])
 
   const {
+    getPosition,
+    isLoading,
+    error,
+    position: geoPosition,
+  } = useGeolocation()
+
+  const {
     control,
     handleSubmit,
     reset,
@@ -48,7 +55,7 @@ export default function AddAddress({ className, close, defaultValues }: Props) {
       } || {},
   })
 
-//  const { lat, lng } = useUrlPosition()
+  //  const { lat, lng } = useUrlPosition()
 
   return (
     <div className={cn('max-w-7xl mx-auto px-clamp py-10 ', className)}>
@@ -145,7 +152,7 @@ export default function AddAddress({ className, close, defaultValues }: Props) {
             <Button
               //  disabled={isStreetLoading || isGeoLoading || isLoading}
               variant={ButtonVariants.PRIMARY}
-              className="bg-green-500 disabled:bg-green-300 disabled:cursor-not-allowed"
+              className="disabled:bg-black/60 disabled:cursor-not-allowed"
             >
               Save address
             </Button>

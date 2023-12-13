@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../../store/store'
 import { useLoginMutation } from '../../../store/auth/authApi'
 import { addUser } from '../../../store/user/userSlice'
 import { errorHandlerAPI } from '../../../utils/errorHandler'
+import { useEffect, useState } from 'react'
 
 interface Props {
   className?: string
@@ -33,7 +34,7 @@ export default function LoginForm({ className }: Props) {
       toast.success('Success ✅', { duration: 3000 })
       navigate('/user/account/orders')
     } catch (error) {
-		errorHandlerAPI(error)
+      errorHandlerAPI(error)
     }
   }
   return (

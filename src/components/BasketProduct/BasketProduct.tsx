@@ -38,6 +38,9 @@ export default function BasketProduct({
   quantity,
   children,
 }: Props) {
+
+
+	
   return (
     <BasketProductContext.Provider
       value={{ image, title, price, quantity, size, color, id }}

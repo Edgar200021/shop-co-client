@@ -18,8 +18,6 @@ export default function Reviews({ className, productId }: Props) {
   const [searchParams] = useSearchParams()
   const sort = searchParams.get('sort')
 
-  console.log(sort)
-
   const { data, isLoading } = useGetReviewsQuery(
     {
       productId,

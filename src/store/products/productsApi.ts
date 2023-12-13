@@ -11,13 +11,13 @@ export const productApi = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getProducts: builder.query<
       ISuccessResponse<IProductsResponse>,
-      Partial<IProductFilter> | null
+      Partial<IProductFilter> | undefined
     >({
       query: filter => ({
         url: '/products',
         params: {
-          limit: filter?.limit || 9,
-          page: filter?.page || 1,
+          limit: filter?.limit,
+          page: filter?.page,
           sort: filter?.sort,
           fields: filter?.fields,
           category: filter?.category,
@@ -56,4 +56,5 @@ export const {
   useGetProductQuery,
   useLazyGetProductQuery,
   useGetProductFiltersQuery,
+  usePrefetch,
 } = productApi

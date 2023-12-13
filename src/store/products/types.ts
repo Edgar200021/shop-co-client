@@ -38,8 +38,8 @@ export interface IProductFilter extends IBaseFilter {
   'price[gt]': number
   'price[lte]': number
   'price[gte]': number
-  'color[elemMatch]': string[]
-  'size[elemMatch]': ProductSize[]
+  'color[elemMatch]': string
+  'size[elemMatch]': string
   title: string
   'title[regex]': string
 }

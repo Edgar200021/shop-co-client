@@ -18,7 +18,7 @@ export default function MainPage({ className }: Props) {
           <h1 className="text-center text-5xl font-bold mb-16 uppercase">
             NEW ARRIVALS
           </h1>
-          <ProductList className="mb-10" filter={null} />
+          <ProductList className="mb-10" filter={{ limit: 4 }} />
           <Button
             className="bg-white text-black border-solid border-[1px] block mx-auto"
             variant={ButtonVariants.PRIMARY}
@@ -32,7 +32,7 @@ export default function MainPage({ className }: Props) {
           <h1 className="text-center text-5xl font-bold mb-16 uppercase">
             top selling
           </h1>
-          <ProductList className="mb-10" filter={null} />
+          <ProductList className="mb-10" filter={{ limit: 4 }} />
           <Button
             className="bg-white text-black border-solid border-[1px] block mx-auto"
             variant={ButtonVariants.PRIMARY}

@@ -31,7 +31,7 @@ export default function AccountAddressPage({ className }: Props) {
               )}
             />
             <Modal.Window
-              className="bg-gray-300 "
+              className=""
               name="add-address"
               renderContent={close => <AddAddress close={close} />}
             />
