@@ -6,8 +6,10 @@ import { Provider } from 'react-redux'
 import { store } from './store/store.ts'
 
 import './styles/index.css'
+import { SkeletonTheme } from 'react-loading-skeleton'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
+  <SkeletonTheme baseColor="#313131" highlightColor="#525252">
     <Provider store={store}>
       <App />
       <Toaster
@@ -25,4 +27,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         }}
       />
     </Provider>
+  </SkeletonTheme>
 )

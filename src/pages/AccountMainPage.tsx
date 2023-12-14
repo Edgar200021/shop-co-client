@@ -1,4 +1,4 @@
-import Empty from '../components/Empty/Empty'
+import Empty from '../components/MessageNotification/Empty'
 
 interface Props {
   className?: string
@@ -9,7 +9,7 @@ export default function AccountMainPage({ className }: Props) {
     <div className={className}>
       <h1 className="text-5xl font-bold mb-6">History of orders</h1>
       <section>
-        <Empty type='order' />
+        <Empty type="order" />
       </section>
     </div>
   )

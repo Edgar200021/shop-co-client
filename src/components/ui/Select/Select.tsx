@@ -3,7 +3,7 @@ import { cn } from '../../../utils/cn'
 
 interface Props<T = string> extends ComponentProps<'select'> {
   className?: string
-  options: [{ value: T; label: string }]
+  options: { value: T; label: string }[]
 }
 
 export default function Select({

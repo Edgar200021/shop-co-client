@@ -4,7 +4,7 @@ import { ChangeEvent } from 'react'
 
 interface Props {
   className?: string
-  options: [{ value: string; label: string }]
+  options: { value: string; label: string }[]
 }
 
 export default function SortBy({ className, options }: Props) {
@@ -18,7 +18,7 @@ export default function SortBy({ className, options }: Props) {
 
   return (
     <Select
-      value={sort!}
+      value={sort || options[0].value}
       onChange={handleChangeSort}
       options={options}
       className={className}

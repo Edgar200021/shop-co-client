@@ -1,6 +1,6 @@
-import { ReactNode, useEffect } from 'react'
+import { ReactNode, useEffect, useLayoutEffect } from 'react'
 import toast from 'react-hot-toast'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../store/store'
 
 interface Props {
@@ -10,16 +10,21 @@ interface Props {
 
 export default function ProtectedRoute({ roles = ['admin'], children }: Props) {
   const user = useAppSelector(state => state.user.user)
+  const navigate = useNavigate()
 
-  if (!user || !roles.includes(user.role)) {
-    const isAuthorized = user && !roles.includes(user.role)
+  useLayoutEffect(() => {
+    if (!user || !roles.includes(user.role)) {
+      const isAuthorized = user && !roles.includes(user.role)
 
-    toast.error(isAuthorized ? 'No access to the route' : 'Not authorized')
+      toast.error(
+        isAuthorized
+          ? "You don't have permission to access this resource."
+          : 'Not authorized'
+      )
 
-    console.log(user)
-
-    return <Navigate to={isAuthorized ? '/' : '/auth/login'} />
-  }
+      navigate(isAuthorized ? '/' : '/auth/login')
+    }
+  }, [user, roles, navigate])
 
   return <>{children}</>
 }

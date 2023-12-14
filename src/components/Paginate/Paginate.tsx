@@ -38,7 +38,7 @@ const Paginate = memo(
       prefetch?.({ page: page ? page + 1 : 2 })
     }
 
-    if (pageCount === 1) return null
+    if (pageCount === 1 || pageCount === 0) return null
 
     return (
       <div className={cn('flex items-center justify-between', className)}>

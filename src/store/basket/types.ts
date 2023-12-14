@@ -1,17 +1,5 @@
 import { IProduct, ProductSize } from '../products/types'
 
-export interface IBasketProduct {
-  id: number
-  product_id: number
-  count: number
-  price: number
-  discounted_price: number
-  image: string
-  color: string
-  title: string
-  size: string
-}
-
 export interface IBasketProductRequest {
   productId: string
   color: string
@@ -28,6 +16,6 @@ export interface IBasketProductResponse {
     color: string
     quantity: number
     _id: string
-    product: IProduct
+    product: Pick<IProduct, '_id' | 'image' | 'title' | 'price'>
   }[]
 }

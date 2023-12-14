@@ -1,4 +1,4 @@
-import { ISuccessResponse } from '../../types/types'
+import { IBaseFilter, ISuccessResponse } from '../../types/types'
 import { apiSlice } from '../appApi'
 import { IBasketProductRequest, IBasketProductResponse } from './types'
 
@@ -6,10 +6,14 @@ export const basketApi = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getBasketProducts: builder.query<
       NonNullable<ISuccessResponse<IBasketProductResponse>>,
-      null
+      Partial<IBaseFilter> | undefined
     >({
-      query: () => ({
+      query: filter => ({
         url: '/basket',
+        params: {
+          page: filter?.page,
+          limit: filter?.limit,
+        },
       }),
       providesTags: ['Basket'],
     }),
@@ -61,4 +65,5 @@ export const {
   useGetBasketProductsQuery,
   useUpdateBasketQuantityMutation,
   useDeleteBasketProductMutation,
+  usePrefetch,
 } = basketApi

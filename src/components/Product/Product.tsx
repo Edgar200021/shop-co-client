@@ -5,7 +5,7 @@ import ProductStars from '../Stars/Stars'
 
 interface Props {
   className?: string
-  id: string
+  _id: string
   image: string
   title: string
   avgRating: number
@@ -16,7 +16,7 @@ interface Props {
 
 export default function Product({
   className,
-  id,
+  _id,
   image,
   title,
   avgRating,
@@ -35,7 +35,7 @@ export default function Product({
           alt={title}
         />
         <Link
-          to={`/product/${id}`}
+          to={`/product/${_id}`}
           className="absolute block w-full h-full top-0 left-0"
         />
       </div>

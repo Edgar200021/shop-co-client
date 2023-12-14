@@ -21,6 +21,7 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import ShopPage from './pages/ShopPage'
 import { useEffect, useState } from 'react'
+import NotFound from './pages/NotFound'
 
 const router = createBrowserRouter([
   {
@@ -112,6 +113,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ])
 

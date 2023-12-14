@@ -1,4 +1,4 @@
-import Empty from "../components/Empty/Empty"
+import Empty from '../components/MessageNotification/Empty'
 
 interface Props {
   className?: string

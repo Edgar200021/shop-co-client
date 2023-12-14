@@ -1,6 +1,6 @@
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 
-import Empty from '../components/Empty/Empty'
+import Empty from '../components/MessageNotification/Empty'
 import Modal from '../components/Modal/Modal'
 import Button, { ButtonVariants } from '../components/ui/Button/Button'
 
@@ -24,7 +24,7 @@ export default function AccountAddressPage({ className }: Props) {
                 <Button
                   variant={ButtonVariants.PRIMARY}
                   onClick={() => open('add-address')}
-                  className="bg-green-500 text-xl"
+                  className="text-xl"
                 >
                   New address +
                 </Button>

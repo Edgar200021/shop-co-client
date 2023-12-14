@@ -1,6 +1,6 @@
 import ReactSlider from 'react-slider'
 import { useSearchParams } from 'react-router-dom'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import Button, { ButtonVariants } from '../ui/Button/Button'
 import PageLoader from '../ui/PageLoader/PageLoader'
@@ -31,10 +31,16 @@ export default function ProductFilters({ className }: Props) {
   })
   const [searchParams, setSearchParams] = useSearchParams()
   const [filters, setFilters] = useState<Filter>({
-    category: '',
-    price: [0, 50],
-    size: [],
-    color: [],
+    category: searchParams.get('category') || '',
+    price: searchParams.get('price<=')
+      ? [+searchParams.get('price>=')!, +searchParams.get('price<=')!]
+      : [0, 50],
+    size: searchParams.get('size')
+      ? (searchParams.get('size')!.split(',') as ProductSize[])
+      : [],
+    color: searchParams.get('color')
+      ? searchParams.get('color')!.split(',')
+      : [],
   })
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -77,6 +83,17 @@ export default function ProductFilters({ className }: Props) {
   }
   function handlePriceChange(value: [number, number]) {
     setFilters(prev => ({ ...prev, price: value }))
+  }
+  function handlePriceClick(value: number) {
+    const [min, max] = filters.price
+
+    setFilters(prev => ({
+      ...prev,
+      price: value > min ? [min, value] : [value, max],
+    }))
+  }
+
+  useEffect(() => {
     const elements = Array.from(
       document.querySelectorAll('.slider [role="slider"]')
     )
@@ -84,7 +101,7 @@ export default function ProductFilters({ className }: Props) {
     elements.forEach((elem, i) => {
       elem.setAttribute('data-price', `${filters.price[i]}$`)
     })
-  }
+  }, [filters.price])
 
   if (isLoading || !data) return <PageLoader />
 
@@ -138,6 +155,7 @@ export default function ProductFilters({ className }: Props) {
                   value={category}
                   name="category"
                   onChange={handleInputChange}
+                  checked={filters.category === category}
                 />
                 {category}
               </label>
@@ -152,10 +170,12 @@ export default function ProductFilters({ className }: Props) {
           max={Math.round(data.data.maxPrice)}
           className="bg-[#f0f0f0] w-full h-3 rounded-full slider cursor-pointer"
           thumbClassName=" rounded-full top-[-50%] w-6 h-6 bg-black  after:absolute after:block after:w-full after:h-4 after:left-[20%]  after:-bottom-6"
-          value={filters.price}
           trackClassName="bg-black h-full rounded-full"
           onChange={handlePriceChange}
+          onSliderClick={handlePriceClick}
           minDistance={10}
+          defaultValue={[0, Math.round(data.data.maxPrice)]}
+          value={filters.price}
         />
       </div>
       <div className="pb-6 border-b-[1px] mb-6">
@@ -194,14 +214,15 @@ export default function ProductFilters({ className }: Props) {
                     variant={InputVariants.PRIMARY}
                     className="fixed opacity-0 pointer-events-none"
                     name="color"
-                    value={color}
+                    value={color.slice(1)}
                     onChange={handleInputChange}
+                    checked={filters.color.includes(color.slice(1))}
                   />
                   <img
                     className={cn(
                       'w-4 h-4 absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0 transition-opacity duration-300  ',
                       {
-                        'opacity-1': filters.color.includes(color),
+                        'opacity-1': filters.color.includes(color.slice(1)),
                       }
                     )}
                     src={checkIcon}
@@ -244,6 +265,7 @@ export default function ProductFilters({ className }: Props) {
                   name="size"
                   value={size}
                   onChange={handleInputChange}
+                  checked={filters.size.includes(size)}
                 />
                 <label
                   htmlFor={size}

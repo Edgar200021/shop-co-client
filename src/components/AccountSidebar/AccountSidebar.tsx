@@ -57,15 +57,6 @@ export default function AccountSidebar({ className, user }: Props) {
               <span> Адрес доставки</span>
             </Button>
           </li>
-          <li>
-            <Button
-              variant={ButtonVariants.PRIMARY}
-              className="hover:bg-black hover:text-white duration-300 transition-colors ease aria-[current=page]:bg-black  aria-[current=page]:text-white"
-            >
-              <img width={48} height={48} src={sunIcon} alt="Sun" />
-              <span> Тема сайта</span>
-            </Button>
-          </li>
         </ul>
         <div className="flex items-center  gap-x-4">
           <span

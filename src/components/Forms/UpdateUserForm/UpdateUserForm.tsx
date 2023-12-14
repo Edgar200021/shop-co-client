@@ -63,11 +63,13 @@ export default function UpdateUserForm({ className, user, close }: Props) {
         </label>
         <Button
           variant={ButtonVariants.PRIMARY}
-          className="rounded-lg bg-green-500 mt-5 text-white max-w-full mb-3 disabled:cursor-not-allowed disabled:bg-green-300"
-        ></Button>
+          className="rounded-lg  mt-5 text-white max-w-full mb-3 disabled:cursor-not-allowed disabled:bg-green-300"
+        >
+          Update
+        </Button>
         <Button
           variant={ButtonVariants.PRIMARY}
-          className="rounded-lg bg-[#F5F5F7] text-green-500 max-w-full"
+          className="rounded-lg bg-[#F5F5F7] text-black max-w-full"
           type="button"
           onClick={close}
         >

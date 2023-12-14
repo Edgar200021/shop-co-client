@@ -13,6 +13,7 @@ import { useUpdateBasketQuantityMutation } from '../../store/basket/basketApi'
 interface Props {
   className?: string
   id: string
+  productId: string
   image: string
   title: string
   size: string[] | string
@@ -37,13 +38,11 @@ export default function BasketProduct({
   color,
   quantity,
   children,
+  productId,
 }: Props) {
-
-
-	
   return (
     <BasketProductContext.Provider
-      value={{ image, title, price, quantity, size, color, id }}
+      value={{ image, title, price, quantity, size, color, id, productId }}
     >
       <li className={cn('flex gap-4 ', className)}>{children}</li>
     </BasketProductContext.Provider>
@@ -51,7 +50,7 @@ export default function BasketProduct({
 }
 
 function BasketProductImage({ className }: { className?: string }) {
-  const { title, image } = useContext(BasketProductContext)!
+  const { title, image, productId } = useContext(BasketProductContext)!
 
   return (
     <div
@@ -60,7 +59,9 @@ function BasketProductImage({ className }: { className?: string }) {
         className
       )}
     >
-      <img className="rounded-md" src={image} alt={title} />
+      <Button variant={ButtonVariants.CLEAR} to={`/product/${productId}`}>
+        <img className="rounded-md" src={image} alt={title} />
+      </Button>
     </div>
   )
 }
@@ -124,22 +125,25 @@ function BasketProductPrice({ className }: { className?: string }) {
 function BasketProductDelete({
   className,
   handleDelete,
+  disabled,
 }: {
   className?: string
   handleDelete: () => void
+  disabled?: boolean
 }) {
   return (
     <Button
       variant={ButtonVariants.CLEAR}
       className={cn('w-6 h-6 ', className)}
       onClick={handleDelete}
+      disabled={disabled}
     >
       <img src={deleteIcon} />
     </Button>
   )
 }
 function BasketProductUpdate({ className }: { className?: string }) {
-//  const { id } = useContext(BasketProductContext)!
+  //  const { id } = useContext(BasketProductContext)!
 
   return (
     <Modal>
