@@ -5,10 +5,11 @@ import emptyFavorite from '../../assets/icons/empty-favorite.svg'
 import emptyAddress from '../../assets/icons/empty-address.svg'
 import emptyProduct from '../../assets/images/Box.png'
 import errorIcon from '../../assets/icons/error.svg'
+import emptyBasket from '../../assets/icons/empty-basket.svg'
 
 interface Props {
   className?: string
-  type: 'favorite' | 'address' | 'order' | 'product' | 'error'
+  type: 'favorite' | 'address' | 'order' | 'product' | 'error' | 'basket'
   variant?: 'vertical' | 'horizontal'
 }
 
@@ -40,6 +41,11 @@ const notificationOptions: Record<
     img: errorIcon,
     title: 'Oops!',
     text: ' Something went wrong,please try again later',
+  },
+  basket: {
+    img: emptyBasket,
+    title: 'Your cart is still empty',
+    text: 'This is where the items you order will appear',
   },
 }
 

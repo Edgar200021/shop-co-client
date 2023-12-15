@@ -52,8 +52,8 @@ export const reviewApi = apiSlice.injectEndpoints({
     }),
 
     deleteMyReview: builder.mutation<ISuccessResponse<null>, string>({
-      query: productId => ({
-        url: `review/updateMyReview/${productId}`,
+      query: productID => ({
+        url: `review/deleteMyReview/${productID}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Review'],

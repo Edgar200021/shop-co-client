@@ -12,7 +12,7 @@ import PageLoader from '../ui/PageLoader/PageLoader'
 import SortBy from '../SortBy/SortBy'
 import { SORT_PRODUCTS } from '../../const/products'
 import { ProductSkeleton } from '../ui/Skeletons/Skeletons'
-import MessageNotification from '../MessageNotification/Empty'
+import MessageNotification from '../MessageNotification/MessageNotification'
 
 interface Props {
   className?: string

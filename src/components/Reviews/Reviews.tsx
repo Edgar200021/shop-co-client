@@ -8,23 +8,37 @@ import Loader from '../ui/Loader/Loader'
 import SortBy from '../SortBy/SortBy'
 import { SORT_REVIEW } from '../../const/reviews'
 import { useSearchParams } from 'react-router-dom'
+import { ReviewSkeleton } from '../ui/Skeletons/Skeletons'
+import Paginate from '../Paginate/Paginate'
+import { IBaseFilter } from '../../types/types'
 
 interface Props {
   className?: string
   productId: string
+  renderPagination?: boolean
+  filters?: Partial<IBaseFilter>
 }
 
-export default function Reviews({ className, productId }: Props) {
+export default function Reviews({
+  className,
+  productId,
+  renderPagination = true,
+  filters = { limit: 6 },
+}: Props) {
   const [searchParams] = useSearchParams()
   const sort = searchParams.get('sort')
 
-  const { data, isLoading } = useGetReviewsQuery(
+  const { data, isFetching } = useGetReviewsQuery(
     {
       productId,
+      limit: filters.limit,
       ...(!!sort && { sort: sort }),
+      ...filters,
     },
     { pollingInterval: 1000 * 60 }
   )
+
+  console.log(data)
 
   return (
     <div className={cn('max-w-7xl mx-auto px-clamp', className)}>
@@ -56,14 +70,29 @@ export default function Reviews({ className, productId }: Props) {
           </Modal>
         </div>
       </div>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <ul className="grid grid-cols-review-list gap-5">
-          {data?.data.reviews.map(review => (
+
+      <ul
+        className={cn('grid grid-cols-review-list gap-5 ', {
+          'mb-10': renderPagination,
+        })}
+      >
+        {isFetching && (
+          <ReviewSkeleton
+            quantity={data?.data.reviews.length || 2}
+            className="max-w-[570px] "
+          />
+        )}
+        {!isFetching &&
+          data?.data.reviews.map(review => (
             <Review productId={productId} {...review} />
           ))}
-        </ul>
+      </ul>
+      {renderPagination && (
+        <Paginate
+          isLoading={isFetching}
+          quantityOfItems={data?.results || 0}
+          limit={filters.limit!}
+        />
       )}
     </div>
   )

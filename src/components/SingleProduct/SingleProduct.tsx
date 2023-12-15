@@ -13,7 +13,7 @@ import { errorHandlerAPI } from '../../utils/errorHandler'
 
 interface Props {
   className?: string
-  id: string
+  _id: string
   image: string
   title: string
   avgRating: number
@@ -27,7 +27,7 @@ interface Props {
 
 export default function SingleProduct({
   className,
-  id,
+  _id,
   image,
   title,
   avgRating,
@@ -58,7 +58,7 @@ export default function SingleProduct({
         color: properties.color,
         size: properties.size as ProductSize,
         quantity: properties.quantity,
-        productId: id,
+        productId: _id,
       }).unwrap()
 
       toast.success('Success ✅. Please check your basket')

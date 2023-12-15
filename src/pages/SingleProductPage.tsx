@@ -20,7 +20,6 @@ export default function SingleProductPage({ className }: Props) {
 
   if (!data) return
 
-
   return (
     <main className={className}>
       <SingleProduct {...data?.data?.product} className="mb-40" />

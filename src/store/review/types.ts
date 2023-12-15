@@ -1,7 +1,7 @@
 import { IUser } from '../auth/types'
 
 export interface IReviewResponse {
-  id: string
+  _id: string
   rating: number
   review: string
   user: Omit<IUser, 'role' | 'id'> & { _id: string }

@@ -8,22 +8,23 @@ interface Props {
     fn: React.Dispatch<React.SetStateAction<boolean>>,
     isCollapsed: boolean
   ) => ReactNode
+  isCollapsed?: boolean
 }
 
 export default function Collapsed({
   className,
   children,
   renderCollapseBtn,
+  isCollapsed = false,
 }: Props) {
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(isCollapsed)
 
   return (
-    <>
+    <div className={cn('text-center', className)}>
       {renderCollapseBtn(setCollapsed, collapsed)}
       <div
         className={cn(
           'grid grid-rows-[0fr] transition-all duration-300 ease overflow-hidden [&>*]:min-h-0 ',
-          className,
           {
             'grid-rows-[1fr]': !collapsed,
           }
@@ -31,6 +32,6 @@ export default function Collapsed({
       >
         {children}
       </div>
-    </>
+    </div>
   )
 }

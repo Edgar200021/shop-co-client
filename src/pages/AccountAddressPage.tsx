@@ -1,6 +1,6 @@
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 
-import Empty from '../components/MessageNotification/Empty'
+import Empty from '../components/MessageNotification/MessageNotification'
 import Modal from '../components/Modal/Modal'
 import Button, { ButtonVariants } from '../components/ui/Button/Button'
 

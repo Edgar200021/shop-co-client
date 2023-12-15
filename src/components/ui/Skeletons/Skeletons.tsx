@@ -72,3 +72,30 @@ export function BasketProductSkeleton({ className, quantity = 6 }: Props) {
     )
   })
 }
+export function ReviewSkeleton({ className, quantity = 6 }: Props) {
+  return Array.from({ length: quantity }, (_, i) => {
+    return (
+      <div
+        key={i}
+        role="status"
+        className={cn(
+          'max-w-md w-full p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700',
+          className
+        )}
+      >
+        <div className="flex items-center justify-between w-full">
+          <div>
+            <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-6"></div>
+            <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-4"></div>
+            <div className="w-96 h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-1"></div>
+            <div className="w-96 h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-1"></div>
+            <div className="w-96 h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-10"></div>
+            <div className="w-44 h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-4"></div>
+          </div>
+        </div>
+
+        <span className="sr-only">Loading...</span>
+      </div>
+    )
+  })
+}

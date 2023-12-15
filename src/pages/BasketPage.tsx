@@ -11,6 +11,7 @@ import Paginate from '../components/Paginate/Paginate'
 import { usePrefetch } from '../store/basket/basketApi'
 import { useSearchParams } from 'react-router-dom'
 import { BasketProductSkeleton } from '../components/ui/Skeletons/Skeletons'
+import MessageNotification from '../components/MessageNotification/MessageNotification'
 
 interface Props {
   className?: string
@@ -33,8 +34,11 @@ export default function BasketPage({ className }: Props) {
   return (
     <main className={className}>
       <div className="max-w-7xl mx-auto px-clamp flex justify-between gap-8 items-start relative">
-        {data?.data && (
-          <div className="flex-1">
+        {!data?.data.basketProducts.length && (
+          <MessageNotification className='flex-1' type="basket" variant="vertical" />
+        )}
+        {data?.data && !!data.data.basketProducts.length && (
+          <div className="flex-1 h-0">
             <ul className="border-[1px] rounded-3xl  px-6 divide-y-[1px] mb-20">
               {(isFetching || isDeleteLoading) && (
                 <BasketProductSkeleton
